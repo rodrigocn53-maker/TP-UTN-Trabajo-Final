@@ -1,0 +1,78 @@
+﻿
+> clase-25@0.0.0 lint
+> eslint .
+
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\AddNewMenssage\AddNewMenssage.jsx
+  5:11  error  Unexpected empty object pattern  no-empty-pattern
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\App.jsx
+  1:10  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\ContactSideBar\ContactSideBar.jsx
+   7:28  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u       no-unused-vars
+   7:39  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u        no-unused-vars
+  10:10  error  'getContactList' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\Context\ContactDetailContext.jsx
+   5:14  error    Fast refresh only works when a file only exports components. Move your React context(s) to a separate file                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react-refresh/only-export-components
+  38:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  36 |
+  37 |     useEffect(
+> 38 |         loadContactById,
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |         [parametros_url.contact_id]
+  40 |     )
+  41 |  react-hooks/set-state-in-effect
+  39:9   warning  React Hook useEffect has a missing dependency: 'contact_id'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\Context\ContactListContext.jsx
+   5:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-refresh/only-export-components
+  27:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  25 |
+  26 |     useEffect (
+> 27 |         loadContactList,
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  28 |         []
+  29 |     )
+  30 |  react-hooks/set-state-in-effect
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\Context\ThemeContext.jsx
+  6:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file  react-refresh/only-export-components
+
+C:\Users\User\Desktop\UTN-Clases Virtuales FullstackDevs\Clase-25\src\Screen\MessagesScreen\MessagesScreen.jsx
+   6:38  error    'useContext' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 no-unused-vars
+   6:49  error    'use' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+  34:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  32 |
+  33 |     useEffect(
+> 34 |         loadContactById,
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  35 |         [parametros_url.contact_id]
+  36 |     )
+  37 |  react-hooks/set-state-in-effect
+  35:9   warning  React Hook useEffect has a missing dependency: 'contact_id'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+
+Ô£û 15 problems (13 errors, 2 warnings)
+

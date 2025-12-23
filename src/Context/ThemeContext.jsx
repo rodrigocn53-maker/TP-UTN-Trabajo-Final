@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import '../ContactSideBar/ContactSideBar.css'
 import ContactSidebar from "../ContactSideBar/ContactSideBar";
+import { ThemeContext } from "./Contexts";
 
 //Creamos el contexto
-export const ThemeContext = createContext()
 
 const ThemeContextProvider = ({children}) => {
     const [isDark, setIsDark] = useState(false)

@@ -3,12 +3,12 @@ Snippet para crear un componente de react
 RFC = React Functional Component
 */
 
-import '../ContactSideBar/ContactSideBar.css'
-import React, {useContext, useEffect, useState } from 'react'
+import './ContactSideBar.css'
+import React, {useContext } from 'react'
 import ContactSearchForm from '../ContactSearchForm/ContacSearchForm'
 import ContactList from '../ContactList/ContactList'
-import { getContactList } from '../services/contactService'
-import { ThemeContext } from '../Context/ThemeContext'
+import { ThemeContext } from '../Context/Contexts'
+
 
 
 export default function ContactSidebar() {
@@ -17,7 +17,7 @@ export default function ContactSidebar() {
     /* console.log('El valor de isDark es:' + isDark) */
 
     return (
-        <aside className={`aside` + (isDark ? 'aside-dark' : '')}>
+        <aside className={`aside ${isDark ? 'aside-dark' : ''}`}>
             <button onClick={toggleTheme}>Cambiar tema</button>
             <div>
                 <ContactSearchForm/>

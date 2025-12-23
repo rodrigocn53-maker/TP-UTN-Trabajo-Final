@@ -1,0 +1,57 @@
+.messages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.message-bubble-container {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.message-bubble {
+    max-width: 60%;
+    padding: 6px 7px 8px 9px;
+    border-radius: 7.5px;
+    font-size: 14.2px;
+    line-height: 19px;
+    color: #111b21;
+    position: relative;
+    box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+}
+
+.message-bubble p {
+    margin: 0;
+}
+
+/* Sent by me: White, aligned right */
+.message-sent-container {
+    justify-content: flex-end;
+}
+
+.message-sent {
+    background-color: #ffffff;
+    border-top-right-radius: 0;
+}
+
+/* Received: Green, aligned left */
+.message-received-container {
+    justify-content: flex-start;
+}
+
+.message-received {
+    background-color: #d9fdd3;
+    border-top-left-radius: 0;
+}
+
+.message-time {
+    float: right;
+    margin-left: 10px;
+    margin-top: 4px; /* Adjust slightly */
+    font-size: 11px;
+    color: #667781;
+    display: flex;
+    align-items: center;
+}
+
+/* Clearfix for float if needed, but flex handles container */

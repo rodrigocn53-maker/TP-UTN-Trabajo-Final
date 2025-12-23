@@ -1,15 +1,14 @@
-import { createContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { getContactList } from "../services/contactService";
-
-export const ContactListContext = createContext()
+import { ContactListContext } from "./Contexts";
 
 const ContactListContextProvider = () => {
     const [contactState, setContactState] = useState([])
     const [loadingContactsState, setLoadingContactState] = useState(true)
 
 
-    function loadContactList (){
+    const loadContactList = useCallback(() => {
         setLoadingContactState(true)
         setTimeout(
             function () {
@@ -21,17 +20,48 @@ const ContactListContextProvider = () => {
             2000
         )
         
-    }
+    }, [])
 
     useEffect (
-        loadContactList,
-        []
+        () => {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            loadContactList()
+        },
+        [loadContactList]
     )
+
+    const updateLastMessage = (contactId, newContent, newTime) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    last_message_content: newContent,
+                    last_message_created_at: newTime,
+                    last_message_state: 'NOT_SEND' // Or 'SENT' if you prefer
+                };
+            }
+            return contact;
+        }));
+    };
+
+    const resetUnseenMessages = (contactId) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    contact_unseen_messages: 0
+                };
+            }
+            return contact;
+        }));
+    };
 
     const providerValues = {
         contactState,
         loadingContactsState,
         loadContactList,
+        updateLastMessage,
+        resetUnseenMessages
     }
 
     return (

@@ -1,0 +1,49 @@
+.message-input-container {
+    height: 62px;
+    background-color: #f0f2f5;
+    padding: 5px 16px;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #d1d7db; /* Match sidebar border */
+}
+
+.message-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.message-input {
+    flex-grow: 1;
+    padding: 9px 12px;
+    margin: 5px 0;
+    border: 1px solid white;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 15px;
+    outline: none;
+    min-height: 20px;
+    max-height: 100px;
+    /* font-family: inherit; */
+    resize: none; /* Disable manual resize if using textarea */
+}
+
+
+
+.input-icon-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #54656f;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn {
+    /* Optional: make send button stand out or just be an icon */
+    color: #54656f; 
+}

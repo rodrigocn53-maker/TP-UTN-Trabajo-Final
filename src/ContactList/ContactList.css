@@ -1,10 +1,107 @@
-.contact-avatar{
-    width: 50px;
-    height: 50px;
+.contact-list-container {
+    display: flex;
+    flex-direction: column;
+    background-color: white; /* Ensure valid contrast */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.2s;
+    text-decoration: none; /* remove link underline */
+    color: inherit;
+}
+
+.contact-item:hover {
+    background-color: #f5f6f6;
+}
+
+.contact-avatar-wrapper {
+    margin-right: 15px;
+    flex-shrink: 0; 
+}
+
+.contact-avatar {
+    width: 49px;
+    height: 49px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.contact-item{
-    color: black
+.contact-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 15px;
+    /* optional: border bottom on the info part only acts like WA */
+    border-bottom: 1px solid #e9edef; 
+    padding-top: 15px;
+    min-width: 0; /* needed for text-overflow to work in flex children */
+}
+
+/* Remove border for the last item if desired, though WA keeps it usually except end of list */
+.contact-item:last-child .contact-info {
+    border-bottom: none;
+}
+
+.contact-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.contact-name {
+    font-size: 17px;
+    font-weight: 500; /* or normal/bold depending on font */
+    color: #111b21;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contact-time {
+    font-size: 12px;
+    color: #667781;
+    flex-shrink: 0;
+    margin-left: 6px;
+}
+
+.contact-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-last-message {
+    font-size: 14px;
+    color: #667781;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.contact-badge {
+    background-color: #25d366; /* WhatsApp Green */
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 4px;
 }

@@ -3,46 +3,47 @@ Snippet para crear un componente de react
 RFC = React Functional Component
 */
 
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import React, { useContext } from 'react'
 import ContactSidebar from '../../ContactSideBar/ContactSideBar'
-import { getContactById } from '../../services/contactService'
+import { ContactDetailContext } from '../../Context/Contexts' 
+import AddNewMenssage from '../../AddNewMenssage/AddNewMenssage'
+import MessagesList from '../../MessagesList/MessagesList'
+import './MessagesScreen.css'
 
 
 export default function MessagesScreen() {
-    const parametros_url = useParams()
-    const contact_id = parametros_url.contact_id
-    const [contactSelected, setContactSelected] = useState(null)
-    const [loadingContact, setLoadingContact] = useState(true)
-    function loadContactById (){
-        setLoadingContact(true)
-        setTimeout(
-            function () {
-                const contact = getContactById(contact_id)
-                setContactSelected(contact)
-                setLoadingContact(false)
-            },
-            2000
-        )
-    }
 
-    useEffect(
-        loadContactById,
-        [parametros_url.contact_id]
-    )
+    const { contactSelected, loadingContact } = useContext(ContactDetailContext)
 
     console.log(contactSelected, loadingContact)
 
     return (
-        <div>
-            <h1>Pantalla de mensajes</h1>
-            <ContactSidebar/>
+        <div className='chat-screen-container'>
             {
                 loadingContact 
-                ? <div>Cargando..</div>
-                : <h2>Contacto seleccionado: {contactSelected.contact_name}</h2>
+                ? <div className='loading-chat'>Cargando...</div>
+                : <>
+                    <div className='chat-header'>
+                        <div className='chat-header-info'>
+                            <img src={contactSelected.contact_avatar} alt={contactSelected.contact_name} className='chat-header-avatar'/>
+                            <div className='chat-header-text'>
+                                <h3>{contactSelected.contact_name}</h3>
+                                <span>en línea hoy a las 10:23</span>
+                            </div>
+                        </div>
+                        <div className='chat-header-actions'>
+                            <button className='icon-btn'>🔍</button>
+                            <button className='icon-btn'>⋮</button>
+                        </div>
+                    </div>
+                    
+                    <div className='messages-area'>
+                        <MessagesList/>
+                    </div>
+                    
+                    <AddNewMenssage/>
+                </>
             }
-            
         </div>
     )
 }

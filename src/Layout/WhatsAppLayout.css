@@ -1,0 +1,80 @@
+.whatsapp-layout-container {
+    display: grid;
+    grid-template-columns: 64px 400px 1fr;
+    height: 100vh;
+    width: 100vw;
+    background-color: #d1d7db; /* WhatsApp Web background */
+    overflow: hidden;
+}
+
+/* Column 1: Community / Icons */
+.community-sidebar {
+    background-color: #f0f2f5;
+    border-right: 1px solid #d1d7db;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.icon-placeholder {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #54656f;
+}
+
+.icon-placeholder:hover {
+    background-color: #d1d7db;
+}
+
+/* Column 2: Contacts List */
+.contacts-sidebar {
+    background-color: white;
+    border-right: 1px solid #d1d7db;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure the ContactSidebar component takes full height */
+.contacts-sidebar > aside {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Column 3: Chat Area */
+.chat-area {
+    background-color: #efeae2; /* WhatsApp Chat Background */
+    position: relative;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); /* Subtle doodle background pattern */
+    background-repeat: repeat;
+    background-size: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Helper for empty state */
+.empty-chat {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5; /* Different from chat bg */
+    border-bottom: 6px solid #25d366;
+    color: #41525d;
+    text-align: center;
+}
+
+.empty-chat h1 {
+    font-weight: 300;
+    margin-bottom: 10px;
+}
