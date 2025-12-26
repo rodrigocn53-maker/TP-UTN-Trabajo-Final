@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "version": 2,
   "rewrites": [
     {
@@ -8,13 +7,3 @@
     }
   ]
 }
-=======
-    "version": 2,
-    "rewrites": [
-        {
-        "source": "/(.*)",
-        "destination": "/index.html"
-        }
-    ]
-}
->>>>>>> 8359876 (cuarto-commit)
