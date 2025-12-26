@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router";
-import { getContactList } from "../services/contactService";
+import { getContactList, createNewContact } from "../services/contactService";
 import { ContactListContext } from "./Contexts";
 
 const ContactListContextProvider = () => {
     const [contactState, setContactState] = useState([])
     const [loadingContactsState, setLoadingContactState] = useState(true)
+    const [searchString, setSearchString] = useState('')
 
 
     const loadContactList = useCallback(() => {
@@ -22,6 +23,11 @@ const ContactListContextProvider = () => {
         
     }, [])
 
+    const createContact = useCallback((phone, name) => {
+        const newContact = createNewContact(phone, name);
+        setContactState(prev => [...prev, newContact]);
+    }, []);
+
     useEffect (
         () => {
             // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -30,7 +36,7 @@ const ContactListContextProvider = () => {
         [loadContactList]
     )
 
-    const updateLastMessage = (contactId, newContent, newTime) => {
+    const updateLastMessage = useCallback((contactId, newContent, newTime) => {
         setContactState(prevContacts => prevContacts.map(contact => {
             if (Number(contact.contact_id) === Number(contactId)) {
                 return {
@@ -42,9 +48,9 @@ const ContactListContextProvider = () => {
             }
             return contact;
         }));
-    };
+    }, []);
 
-    const resetUnseenMessages = (contactId) => {
+    const resetUnseenMessages = useCallback((contactId) => {
         setContactState(prevContacts => prevContacts.map(contact => {
             if (Number(contact.contact_id) === Number(contactId)) {
                 return {
@@ -54,14 +60,26 @@ const ContactListContextProvider = () => {
             }
             return contact;
         }));
-    };
+    }, []);
+
+    // Filter contacts based on searchString
+    const filteredContacts = contactState.filter(contact => 
+        contact.contact_name.toLowerCase().includes(searchString.toLowerCase())
+    );
+
+    // Calculate Global Unread Count
+    const totalUnread = contactState.reduce((acc, contact) => acc + (contact.contact_unseen_messages || 0), 0);
 
     const providerValues = {
-        contactState,
+        contactState: filteredContacts, // Use filtered list
         loadingContactsState,
         loadContactList,
         updateLastMessage,
-        resetUnseenMessages
+        resetUnseenMessages,
+        createContact,
+        searchString, 
+        setSearchString,
+        totalUnread
     }
 
     return (

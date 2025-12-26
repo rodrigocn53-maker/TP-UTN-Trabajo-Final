@@ -18,10 +18,8 @@ export default function ContactSidebar() {
 
     return (
         <aside className={`aside ${isDark ? 'aside-dark' : ''}`}>
-            <button onClick={toggleTheme}>Cambiar tema</button>
             <div>
                 <ContactSearchForm/>
-                <a>Crear contacto</a>
             </div>
             <ContactList/>
             {/* <ContactList contactState={contactState} loadingContactsState={loadingContactsState}/> */}

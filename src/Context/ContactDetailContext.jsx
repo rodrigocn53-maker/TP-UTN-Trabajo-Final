@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useContext } from "react";
 import { Outlet, useParams } from "react-router";
-import { getContactById } from "../services/contactService";
+import { getContactById, saveMessageToContact, deleteMessageFromContact, editMessageInContact } from "../services/contactService";
 import { ContactDetailContext, ContactListContext } from "./Contexts";
 
 const ContactDetailContextProvider = ({ children }) => {
@@ -17,7 +17,11 @@ const ContactDetailContextProvider = ({ children }) => {
         setTimeout(
             function () {
                 const contact = getContactById(contact_id)
-                setContactSelected(contact)
+                // BREAK REFERENCE: unique copy of messages to avoid double-add when mutating service data
+                setContactSelected({
+                    ...contact,
+                    messages: [...contact.messages]
+                })
                 setLoadingContact(false)
                 // Reset unseen messages when chat is opened
                 resetUnseenMessages(contact_id)
@@ -27,26 +31,43 @@ const ContactDetailContextProvider = ({ children }) => {
     }, [contact_id]) // Removed resetUnseenMessages to avoid potential infinite loop if the function reference changes
 
     function AddNewMenssage(content){
-        const new_timestamp = new Date();
-        const new_message = {
-            message_id: contactSelected.messages.length +1,
-            message_content: content,
-            message_state: 'NOT_SEND',
-            message_created_at: new_timestamp,
-            send_by_me: true
-        }
+        // Save to service (persistence)
+        const new_message = saveMessageToContact(contact_id, content);
+        
+        // Update local state immediately
         setContactSelected({
             ...contactSelected,
             messages: [...contactSelected.messages, new_message]
         })
         
-        // Update the global list state
-        updateLastMessage(contact_id, content, new_timestamp)
+        updateLastMessage(contact_id, content, new_message.messages_create_at)
+    }
+
+    function deleteMessage (message_id) {
+        deleteMessageFromContact(contact_id, message_id);
+        
+        setContactSelected({
+            ...contactSelected,
+            messages: contactSelected.messages.filter(msg => msg.message_id !== message_id)
+        })
+    }
+
+    function editMessage (message_id, new_content) {
+        editMessageInContact(contact_id, message_id, new_content);
+
+        setContactSelected({
+            ...contactSelected,
+            messages: contactSelected.messages.map(msg => {
+                if(msg.message_id === message_id){
+                    return {...msg, message_content: new_content}
+                }
+                return msg
+            })
+        })
     }
 
     useEffect(
         () => {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             loadContactById()
         },
         [loadContactById]
@@ -56,7 +77,9 @@ const ContactDetailContextProvider = ({ children }) => {
         contactSelected,
         loadingContact,
         loadContactById,
-        AddNewMenssage
+        AddNewMenssage,
+        deleteMessage,
+        editMessage
     }
 
     

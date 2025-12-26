@@ -1,0 +1,166 @@
+.user-profile-container {
+    height: 100%;
+    background-color: var(--bg-color-main);
+    display: flex;
+    flex-direction: column;
+    animation: slideInLeft 0.2s ease-out;
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.user-profile-header {
+    height: 108px;
+    background-color: #008069;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 20px 20px 20px;
+    gap: 30px;
+}
+
+.dark-theme .user-profile-header {
+    background-color: var(--bg-color-header);
+    color: var(--text-primary);
+    align-items: center; /* Adjust height/align for dark mode style if needed */
+    height: 60px; /* WA Dark mode header is usually shorter or same */
+}
+
+/* WhatsApp Web Header Height Adjustment */
+.user-profile-header h3 {
+    font-size: 19px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: white; /* Or var(--text-primary) in dark */
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dark-theme .back-btn {
+    color: var(--text-secondary);
+}
+
+.user-profile-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: var(--bg-color-main);
+}
+
+.profile-avatar-section {
+    display: flex;
+    justify-content: center;
+    padding: 28px 0;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.user-avatar-large {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.avatar-wrapper:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.profile-field-section {
+    background-color: var(--bg-color-sidebar);
+    padding: 14px 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px var(--shadow-box);
+}
+
+.profile-field-section label {
+    font-size: 14px;
+    color: #008069;
+    margin-bottom: 14px;
+    display: block;
+}
+
+.dark-theme .profile-field-section label {
+    color: #00a884;
+}
+
+.display-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.display-name {
+    font-size: 17px;
+    color: var(--text-primary);
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: var(--icon-color);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.field-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.edit-name-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--active-tab-marker);
+    padding-bottom: 5px;
+}
+
+.edit-name-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-size: 17px;
+    color: var(--text-primary);
+    outline: none;
+}
+
+.edit-actions button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: var(--text-secondary);
+}

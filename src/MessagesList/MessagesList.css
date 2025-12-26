@@ -15,9 +15,9 @@
     border-radius: 7.5px;
     font-size: 14.2px;
     line-height: 19px;
-    color: #111b21;
+    color: var(--text-primary);
     position: relative;
-    box-shadow: 0 1px 0.5px rgba(11,20,26,.13);
+    box-shadow: 0 1px 0.5px var(--shadow-box);
 }
 
 .message-bubble p {
@@ -30,7 +30,7 @@
 }
 
 .message-sent {
-    background-color: #ffffff;
+    background-color: var(--outgoing-msg-bg);
     border-top-right-radius: 0;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .message-received {
-    background-color: #d9fdd3;
+    background-color: var(--incoming-msg-bg);
     border-top-left-radius: 0;
 }
 
@@ -49,9 +49,96 @@
     margin-left: 10px;
     margin-top: 4px; /* Adjust slightly */
     font-size: 11px;
-    color: #667781;
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
 }
 
 /* Clearfix for float if needed, but flex handles container */
+
+/* Message Options Button (down arrow) */
+.message-options-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    /* Gradient needs special handling for dark mode, using simple bg for now or variables */
+    /* Since gradients are complex with variables, I'll use simple background or variable for gradient stops */
+    background: none; 
+    /* NOTE: Gradients are hard to theme directly with simple vars unless we define the whole gradient string. */
+    /* Falling back to simple transparent background as icons are usually visible on hover */
+    
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+    display: none; /* Show on hover parent */
+    border-radius: 50%;
+    font-size: 16px;
+    color: var(--icon-color);
+    line-height: 1;
+}
+
+/* Adjustments for gradients could be skipped or simplified */
+.message-received .message-options-btn {
+     background-color: var(--incoming-msg-bg);
+     box-shadow: -10px 0 10px var(--incoming-msg-bg); /* Fake fade */
+}
+.message-sent .message-options-btn {
+     background-color: var(--outgoing-msg-bg);
+     box-shadow: -10px 0 10px var(--outgoing-msg-bg);
+}
+
+.message-bubble:hover .message-options-btn {
+    display: block;
+}
+
+/* Dropdown Menu */
+.message-options-menu {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    background-color: var(--modal-bg);
+    box-shadow: 0 2px 5px var(--shadow-box);
+    border-radius: 4px;
+    z-index: 100;
+    min-width: 100px;
+    padding: 5px 0;
+}
+
+.menu-item {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Edit Form */
+.edit-message-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edit-message-input {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+    flex-grow: 1;
+    background-color: var(--bg-color-intput);
+    color: var(--text-primary);
+}
+
+.edit-save-btn, .edit-cancel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 5px;
+}
+
+.edit-save-btn { color: var(--active-tab-marker); }
+.edit-cancel-btn { color: #ea0038; }

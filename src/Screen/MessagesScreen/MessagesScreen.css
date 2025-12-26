@@ -1,24 +1,39 @@
 .chat-screen-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
+    /* width: 100%;  -- removed to let it fit parent flex defined in layout */
+    overflow: hidden; /* Critical to prevent breaking parent layout */
 }
+
+.chat-main-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    min-width: 0; /* Prevents flex item from overflowing */
+    position: relative;
+    overflow: hidden; /* Ensure internal scrolling works */
+}
+
+/* Rest of the CSS remains mostly valid, but children like chat-header are now inside chat-main-area */
 
 .chat-header {
     height: 60px;
-    background-color: #f0f2f5;
+    background-color: var(--bg-color-header);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    border-bottom: 1px solid #d1d7db;
+    border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
+    cursor: pointer; /* To indicate clickable */
 }
 
 .chat-header-info {
     display: flex;
     align-items: center;
     cursor: pointer;
+    flex-grow: 1; /* Clickable area */
 }
 
 .chat-header-avatar {
@@ -32,20 +47,20 @@
 .chat-header-text h3 {
     font-size: 16px;
     font-weight: 400;
-    color: #111b21;
+    color: var(--text-primary);
     margin: 0;
 }
 
 .chat-header-text span {
     font-size: 13px;
-    color: #667781;
+    color: var(--text-secondary);
 }
 
 .icon-btn {
     background: none;
     border: none;
     font-size: 20px;
-    color: #54656f;
+    color: var(--icon-color);
     margin-left: 15px;
     cursor: pointer;
 }
@@ -53,7 +68,7 @@
 .messages-area {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 20px 60px; /* Padding for desktop, can be smaller for mobile */
+    padding: 10px 5%; /* Use percentage for horizontal padding to be more responsive */
     display: flex;
     flex-direction: column;
 }
@@ -63,5 +78,45 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #667781;
+    color: var(--text-secondary);
+    width: 100%;
+}
+
+/* Search Bar Styles */
+.chat-search-bar {
+    background-color: var(--bg-color-header);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 60px; /* Below header */
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 2px 2px var(--shadow-box);
+}
+
+.chat-search-input {
+    flex-grow: 1;
+    border: none;
+    background-color: var(--bg-color-main);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    color: var(--text-primary);
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+    color: var(--icon-color);
+}
+
+.active-btn {
+    background-color: rgba(0,0,0,0.1); /* Slightly dark */
+    border-radius: 50%;
 }

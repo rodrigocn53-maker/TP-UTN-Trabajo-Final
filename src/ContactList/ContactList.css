@@ -1,7 +1,7 @@
 .contact-list-container {
     display: flex;
     flex-direction: column;
-    background-color: white; /* Ensure valid contrast */
+    background-color: var(--bg-color-sidebar); /* Ensure valid contrast */
     flex-grow: 1;
     overflow-y: auto;
 }
@@ -11,14 +11,16 @@
     align-items: center;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: #fff;
+    background-color: var(--bg-color-sidebar);
     transition: background-color 0.2s;
     text-decoration: none; /* remove link underline */
     color: inherit;
+    border-bottom: 1px solid var(--border-color); /* Separator */
+    margin: 0; 
 }
 
 .contact-item:hover {
-    background-color: #f5f6f6;
+    background-color: var(--hover-bg);
 }
 
 .contact-avatar-wrapper {
@@ -38,15 +40,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 15px;
-    /* optional: border bottom on the info part only acts like WA */
-    border-bottom: 1px solid #e9edef; 
-    padding-top: 15px;
+    padding-bottom: 0; /* Remove padding/border from here if moving to item */
+    border-bottom: none; /* Moved to container for full width logic or keep here if desired */
+    padding-top: 0;
     min-width: 0; /* needed for text-overflow to work in flex children */
 }
 
 /* Remove border for the last item if desired, though WA keeps it usually except end of list */
-.contact-item:last-child .contact-info {
+.contact-item:last-child {
     border-bottom: none;
 }
 
@@ -60,7 +61,7 @@
 .contact-name {
     font-size: 17px;
     font-weight: 500; /* or normal/bold depending on font */
-    color: #111b21;
+    color: var(--text-primary);
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -69,7 +70,7 @@
 
 .contact-time {
     font-size: 12px;
-    color: #667781;
+    color: var(--text-secondary);
     flex-shrink: 0;
     margin-left: 6px;
 }
@@ -82,7 +83,7 @@
 
 .contact-last-message {
     font-size: 14px;
-    color: #667781;
+    color: var(--text-secondary);
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -92,7 +93,7 @@
 }
 
 .contact-badge {
-    background-color: #25d366; /* WhatsApp Green */
+    background-color: var(--active-tab-marker); /* WhatsApp Green */
     color: white;
     font-size: 12px;
     font-weight: 500;

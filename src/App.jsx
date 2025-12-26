@@ -4,6 +4,7 @@ import WhatsAppLayout from './Layout/WhatsAppLayout'
 import './global.css'
 import ContactListContextProvider from "./Context/ContactListContext"
 import ContactDetailContextProvider from "./Context/ContactDetailContext"
+import ThemeContextProvider from "./Context/ThemeContext"
 
 function App (){
 
@@ -12,7 +13,11 @@ function App (){
       <Route path="/login" element={<h1>Soy el login</h1>} />
       
       <Route element={<ContactListContextProvider/>}>
-        <Route path="/" element={<WhatsAppLayout />}>
+        <Route path="/" element={
+            <ThemeContextProvider>
+                <WhatsAppLayout />
+            </ThemeContextProvider>
+        }>
           <Route index element={
             <div className="empty-chat">
                 <h1>WhatsApp Web</h1>

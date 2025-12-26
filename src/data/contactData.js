@@ -4,6 +4,9 @@ const contact_data = [
         contact_id: 1,
         contact_name: 'Kirby',
         contact_avatar: 'https://w7.pngwing.com/pngs/39/550/png-transparent-kirby-s-return-to-dream-land-kirby-s-dream-land-kirby-s-epic-yarn-kirby-super-star-kirby-triple-deluxe-kirby-heart-nintendo-boss-thumbnail.png',
+        contact_bio: 'Héroe de Dream Land. ¡Poyo!',
+        contact_phone: '+1 123 456 7890',
+        contact_media: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
         contact_unseen_messages: 1,
         last_message_content: '¡Poioh!',
         last_message_state: 'RECEIVED',/*'NOT_SEND' | 'NOT_RECEIVED' | 'RECEIVED' | 'SEEN'*/

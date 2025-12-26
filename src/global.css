@@ -1,3 +1,68 @@
+:root {
+    /* Light Mode Palette */
+    --bg-color-main: #f0f2f5;
+    --bg-color-sidebar: #ffffff;
+    --bg-color-header: #f0f2f5;
+    --bg-color-input: #ffffff;
+    --bg-color-chat: #efeae2; /* WhatsApp default chat bg color */
+    
+    --text-primary: #111b21;
+    --text-secondary: #667781;
+    --text-placeholder: #8696a0;
+    
+    --border-color: #d1d7db; /* e9edef */
+    --input-border: #f0f2f5;
+    
+    --outgoing-msg-bg: #d9fdd3;
+    --incoming-msg-bg: #ffffff;
+    
+    --icon-color: #54656f;
+    --active-tab-marker: #25d366;
+    --hover-bg: #f5f6f6;
+    
+    --modal-bg: #ffffff;
+    --modal-overlay: rgba(0,0,0,0.5);
+    
+    --shadow-box: rgba(11,20,26,.13);
+
+    --chat-bg-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    --chat-bg-opacity: 0.4;
+    --chat-bg-filter: none;
+}
+
+.dark-theme {
+    /* Dark Mode Palette */
+    --bg-color-main: #111b21; /* Dark background */
+    --bg-color-sidebar: #111b21;
+    --bg-color-header: #202c33;
+    --bg-color-input: #2a3942;
+    --bg-color-chat: #0b141a;
+    
+    --text-primary: #e9edef;
+    --text-secondary: #8696a0;
+    --text-placeholder: #8696a0; /* Same/Similar */
+    
+    --border-color: #222e35;
+    --input-border: #2a3942;
+    
+    --outgoing-msg-bg: #005c4b;
+    --incoming-msg-bg: #202c33;
+    
+    --icon-color: #aebac1;
+    --active-tab-marker: #00a884;
+    --hover-bg: #202c33;
+
+    --modal-bg: #222e35;
+    --modal-overlay: rgba(0,0,0,0.85);
+    
+    --shadow-box: rgba(0,0,0,.3);
+
+    /* Dark mode background: Use same image but inverted opacity or specific dark URL */
+    --chat-bg-opacity: 0.06;
+    --chat-bg-filter: invert(1); /* Invert to make doodles light on dark bg */
+    --chat-bg-image: url('https://media.istockphoto.com/id/1201667381/es/vector/soporte-al-cliente-relacionado-patr%C3%B3n-sin-costuras-y-fondo-con-iconos-de-l%C3%ADnea.jpg?s=612x612&w=0&k=20&c=vlC_7TnvXF1ERqX1sJZJGu1K4-xdEBKr-1BW2VDwuGE=');
+}
+
 * {
     text-decoration: none;
     margin: 0;
@@ -8,13 +73,6 @@
 
 body {
     overflow: hidden; /* Prevent body scroll, handle in app */
+    background-color: var(--bg-color-main);
+    color: var(--text-primary);
 }
-
-/* hover:
-#1d1f1f
-#343636
-
-color verde #21c063
-para notificaciones pop (cicular con letra interna transparent)
-
-*/
