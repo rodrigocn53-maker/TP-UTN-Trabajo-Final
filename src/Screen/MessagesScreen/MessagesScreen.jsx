@@ -43,6 +43,17 @@ export default function MessagesScreen() {
     const toggleProfile = () => {
         setShowProfile(!showProfile);
     }
+
+    const getSubtitle = () => {
+        if (contactSelected.isGroup && contactSelected.participants) {
+             const names = contactSelected.participants.map(id => {
+                const c = contactState.find(contact => Number(contact.contact_id) === Number(id))
+                return c ? c.contact_name : null
+             }).filter(Boolean)
+             return names.length > 0 ? names.join(', ') : 'Tú'
+        }
+        return 'en línea hoy a las 10:23'
+    }
     
     // Filter messages based on search query
     const filteredMessages = contactSelected 
@@ -63,7 +74,9 @@ export default function MessagesScreen() {
                                 <img src={contactSelected.contact_avatar} alt={contactSelected.contact_name} className='chat-header-avatar'/>
                                 <div className='chat-header-text'>
                                     <h3>{contactSelected.contact_name}</h3>
-                                    <span>en línea hoy a las 10:23</span>
+                                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: '300px', display: 'block' }}>
+                                        {getSubtitle()}
+                                    </span>
                                 </div>
                             </div>
                             <div className='chat-header-actions'>

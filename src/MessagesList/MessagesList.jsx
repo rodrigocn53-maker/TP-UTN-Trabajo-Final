@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { ContactDetailContext } from '../Context/Contexts'
+import { ContactDetailContext, ContactListContext } from '../Context/Contexts'
 import MessageItem from './MessageItem'
 import './MessagesList.css'
 
 const MessagesList =({ messages }) => {
     const { contactSelected } = useContext(ContactDetailContext);
+    const { contactState } = useContext(ContactListContext);
     
     // If messages prop is passed (e.g. filtered), use it. Otherwise use all messages.
     const displayMessages = messages || contactSelected.messages
@@ -48,6 +49,14 @@ const MessagesList =({ messages }) => {
                     const showDate = lastDate !== dateKey;
                     if (showDate) lastDate = dateKey;
 
+                    // Avatar Logic
+                    let authorAvatar = null;
+                    if (contactSelected?.isGroup && message.messages_state !== 'SENT' && message.message_author !== 'YO') {
+                        const author = contactState.find(c => c.contact_name === message.message_author);
+                        if (author) authorAvatar = author.contact_avatar;
+                        else authorAvatar = `https://ui-avatars.com/api/?name=${message.message_author}&background=random&bold=true`;
+                    }
+
                     return (
                         <React.Fragment key={message.message_id}>
                             {showDate && (
@@ -55,7 +64,7 @@ const MessagesList =({ messages }) => {
                                     <span className='date-pill'>{getDayLabel(message.messages_create_at)}</span>
                                 </div>
                             )}
-                            <MessageItem message={message}/>
+                            <MessageItem message={message} avatar={authorAvatar}/>
                         </React.Fragment>
                     );
                 })

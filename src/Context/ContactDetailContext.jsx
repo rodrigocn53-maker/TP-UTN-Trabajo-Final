@@ -12,34 +12,41 @@ const ContactDetailContextProvider = ({ children }) => {
     // Consume ContactListContext to update the list when a message is sent
     const { updateLastMessage, resetUnseenMessages, contactState } = useContext(ContactListContext);
 
-    const loadContactById = useCallback(() => {
-        setLoadingContact(true)
-        setTimeout(
-            function () {
-                const contact = getContactById(contact_id)
-                // BREAK REFERENCE: unique copy of messages to avoid double-add when mutating service data
-                setContactSelected({
-                    ...contact,
-                    messages: [...contact.messages]
-                })
-                setLoadingContact(false)
-                // Reset unseen messages when chat is opened
-                resetUnseenMessages(contact_id)
-            },
-            100 // Cambia este valor para ajustar el tiempo de carga (en milisegundos)
-        )
-    }, [contact_id]) // Removed resetUnseenMessages to avoid potential infinite loop if the function reference changes
+    // Effect 1: Handle Chat Entry (Loading + Reset Unseen)
+    useEffect(() => {
+        if(contact_id){
+             setLoadingContact(true)
+             resetUnseenMessages(contact_id)
+             setTimeout(() => setLoadingContact(false), 500)
+        }
+    }, [contact_id, resetUnseenMessages])
+
+    // Effect 2: Sync State (Read-Only)
+    useEffect(() => {
+        if(contact_id && contactState.length > 0){
+             const contact = contactState.find(c => Number(c.contact_id) === Number(contact_id))
+             if(contact){
+                 setContactSelected({ ...contact, messages: contact.messages ? [...contact.messages] : [] })
+             }
+        }
+    }, [contact_id, contactState])
 
     function AddNewMenssage(content){
-        // Check if blocked
         const currentContact = contactState.find(c => Number(c.contact_id) === Number(contact_id));
         const isBlocked = currentContact?.isBlocked;
-        const msgState = isBlocked ? 'SENT' : 'RECEIVED'; // Mock: Blocked = single check, Unblocked = double check
+        const msgState = isBlocked ? 'SENT' : 'RECEIVED';
 
-        // Save to service (persistence)
-        const new_message = saveMessageToContact(contact_id, content);
-        new_message.messages_state = msgState; // Override mock default
-        
+        const new_message = {
+            message_id: Date.now(),
+            message_content: content,
+            message_author: 'YO',
+            messages_create_at: new Date().toISOString(),
+            messages_state: msgState
+        };
+
+        // Try to save to persistence service (only works for static contacts)
+        saveMessageToContact(contact_id, content);
+
         // Update local state immediately
         setContactSelected({
             ...contactSelected,
@@ -88,17 +95,12 @@ const ContactDetailContextProvider = ({ children }) => {
         })
     }
 
-    useEffect(
-        () => {
-            loadContactById()
-        },
-        [loadContactById]
-    )
+
+
 
     const providerValues = {
         contactSelected,
         loadingContact,
-        loadContactById,
         AddNewMenssage,
         deleteMessage,
         editMessage,

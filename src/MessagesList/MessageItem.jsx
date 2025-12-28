@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
 import { ContactDetailContext, ContactListContext } from '../Context/Contexts'
 
-export default function MessageItem({ message }) {
+export default function MessageItem({ message, avatar }) {
     const { deleteMessage, editMessage, addReaction } = useContext(ContactDetailContext)
     const [isHovered, setIsHovered] = useState(false)
     const [showMenu, setShowMenu] = useState(false)
@@ -67,6 +67,21 @@ export default function MessageItem({ message }) {
                 // Optional: close picker on leave? Better to keep it open if interaction intent
             }}
         >
+            {avatar && !isSentByMe && (
+                <img 
+                    src={avatar} 
+                    alt="" 
+                    style={{
+                        width: '37px', 
+                        height: '37px', 
+                        borderRadius: '50%', 
+                        marginRight: '10px',
+                        border: '1px solid var(--border-color)',
+                        objectFit: 'cover',
+                        flexShrink: 0
+                    }} 
+                />
+            )}
             <div className={`message-bubble ${isSentByMe ? 'message-sent' : 'message-received'}`}>
                 
                 {/* Message Content or Edit Form */}

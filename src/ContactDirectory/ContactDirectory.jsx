@@ -1,15 +1,22 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router'
 import { ContactListContext } from '../Context/Contexts'
+import ContactSearchForm from '../ContactSearchForm/ContacSearchForm'
 import './ContactDirectory.css'
 
 export default function ContactDirectory() {
-    const { contactState } = useContext(ContactListContext)
+    const { contactState, searchString } = useContext(ContactListContext)
 
     // Sort contacts A-Z By Name
-    const sortedContacts = [...contactState].sort((a, b) => 
+    let sortedContacts = [...contactState].sort((a, b) => 
         a.contact_name.localeCompare(b.contact_name)
     )
+
+    if (searchString) {
+        sortedContacts = sortedContacts.filter(contact => 
+            contact.contact_name.toLowerCase().includes(searchString.toLowerCase())
+        )
+    }
 
     // Group by first letter (Optional polish, but requested "A-Z list" usually implies structure)
     // For now, flat sorted list is safer based on "lista de A-Z el orden".
@@ -17,6 +24,9 @@ export default function ContactDirectory() {
     return (
         <div className='contact-directory-container'>
             <h1 className='main-sidebar-title'>Contactos</h1>
+            <div style={{ marginBottom: '10px' }}>
+                <ContactSearchForm />
+            </div>
             <div className='directory-list'>
                 {sortedContacts.map(contact => (
                     <Link className='directory-item' key={contact.contact_id} to={'/chat/' + contact.contact_id}>

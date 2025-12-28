@@ -55,8 +55,8 @@
 }
 
 .profile-avatar-large {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 20px;
@@ -129,4 +129,56 @@
 
 .action-btn:hover {
     background-color: var(--hover-bg);
+}
+
+.group-members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.group-member-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.group-member-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.member-avatar, .member-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.member-avatar-placeholder {
+    background: var(--active-tab-marker);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.member-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.member-name {
+    color: var(--text-primary);
+    font-size: 15px;
+}
+
+.member-status {
+    color: var(--text-secondary);
+    font-size: 13px;
 }

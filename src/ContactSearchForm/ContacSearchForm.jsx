@@ -1,12 +1,30 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { ContactListContext } from '../Context/Contexts'
+import GroupCreationModal from '../GroupCreation/GroupCreationModal'
 import './ContactSearchForm.css'
 
 export default function ContacSearchForm() {
     const { searchString, setSearchString, createContact } = useContext(ContactListContext)
     const [showModal, setShowModal] = useState(false)
+    const [showGroupModal, setShowGroupModal] = useState(false)
+    const [showAddMenu, setShowAddMenu] = useState(false)
     const [newContactName, setNewContactName] = useState('')
     const [newContactPhone, setNewContactPhone] = useState('')
+    
+    // Menu Ref
+    const menuRef = useRef(null)
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowAddMenu(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const handleChangePhone = (e) => {
         const value = e.target.value;
@@ -40,9 +58,37 @@ export default function ContacSearchForm() {
                     onChange={(e) => setSearchString(e.target.value)}
                 />
             </div>
-            <button className='add-contact-btn' onClick={() => setShowModal(true)} title="Nuevo chat">
-                +
-            </button>
+            <div style={{ position: 'relative' }} ref={menuRef}> 
+                <button 
+                    className='add-contact-btn' 
+                    onClick={() => setShowAddMenu(!showAddMenu)} 
+                    title="Opciones"
+                >
+                    +
+                </button>
+                {showAddMenu && (
+                    <div className='add-menu-container'>
+                        <button 
+                            className='add-menu-item'
+                            onClick={() => {
+                                setShowModal(true)
+                                setShowAddMenu(false)
+                            }}
+                        >
+                            Crear contacto
+                        </button>
+                        <button 
+                            className='add-menu-item'
+                            onClick={() => {
+                                setShowGroupModal(true)
+                                setShowAddMenu(false)
+                            }}
+                        >
+                            Crear grupo
+                        </button>
+                    </div>
+                )}
+            </div>
 
             {/* Modal for adding contact */}
             {showModal && (
@@ -72,6 +118,8 @@ export default function ContacSearchForm() {
                     </div>
                 </div>
             )}
+            
+            <GroupCreationModal isOpen={showGroupModal} onClose={() => setShowGroupModal(false)} />
         </div>
     )
 }

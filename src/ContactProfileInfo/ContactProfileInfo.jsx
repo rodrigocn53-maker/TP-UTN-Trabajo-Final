@@ -28,6 +28,33 @@ export default function ContactProfileInfo({ contact, onClose, isOpen }) {
                 <p>{contact.contact_bio || 'Sin info'}</p>
             </div>
 
+            {contact.isGroup && contact.participants && (
+                <div className='profile-section'>
+                    <h4>Miembros del grupo ({contact.participants.length + 1})</h4>
+                    <div className='group-members-list'>
+                        {contact.participants.map(id => {
+                            const member = contactState.find(c => c.contact_id === id)
+                            if (!member) return null
+                            return (
+                                <div key={member.contact_id} className='group-member-item'>
+                                    <img src={member.contact_avatar} alt='' className='member-avatar'/>
+                                    <div className='member-info'>
+                                        <span className='member-name'>{member.contact_name}</span>
+                                        <span className='member-status'>Disponible</span>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        <div className='group-member-item'>
+                             <div className='member-avatar-placeholder'>Tú</div>
+                             <div className='member-info'>
+                                <span className='member-name'>Tú</span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className='profile-section'>
                 <h4>Archivos, enlaces y docs.</h4>
                 <div className='media-grid'>
