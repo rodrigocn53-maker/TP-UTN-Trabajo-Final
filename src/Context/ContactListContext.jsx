@@ -36,14 +36,14 @@ const ContactListContextProvider = () => {
         [loadContactList]
     )
 
-    const updateLastMessage = useCallback((contactId, newContent, newTime) => {
+    const updateLastMessage = useCallback((contactId, newContent, newTime, newState = 'SENT') => {
         setContactState(prevContacts => prevContacts.map(contact => {
             if (Number(contact.contact_id) === Number(contactId)) {
                 return {
                     ...contact,
                     last_message_content: newContent,
                     last_message_created_at: newTime,
-                    last_message_state: 'NOT_SEND' // Or 'SENT' if you prefer
+                    last_message_state: newState 
                 };
             }
             return contact;
@@ -70,6 +70,22 @@ const ContactListContextProvider = () => {
     // Calculate Global Unread Count
     const totalUnread = contactState.reduce((acc, contact) => acc + (contact.contact_unseen_messages || 0), 0);
 
+    const toggleBlockContact = useCallback((contactId) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    isBlocked: !contact.isBlocked
+                };
+            }
+            return contact;
+        }));
+    }, []);
+
+    const deleteContact = useCallback((contactId) => {
+        setContactState(prevContacts => prevContacts.filter(c => Number(c.contact_id) !== Number(contactId)));
+    }, []);
+
     const providerValues = {
         contactState: filteredContacts, // Use filtered list
         loadingContactsState,
@@ -77,6 +93,8 @@ const ContactListContextProvider = () => {
         updateLastMessage,
         resetUnseenMessages,
         createContact,
+        toggleBlockContact,
+        deleteContact, // Exported
         searchString, 
         setSearchString,
         totalUnread

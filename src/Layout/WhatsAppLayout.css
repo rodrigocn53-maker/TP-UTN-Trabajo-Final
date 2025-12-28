@@ -58,26 +58,53 @@
     border: 2px solid var(--bg-color-main); /* Cutout effect */
 }
 
-.icon-placeholder:hover, .icon-placeholder.active-icon {
+.icon-placeholder:hover, 
+.icon-placeholder.active-icon,
+.icon-placeholder.active-tab {
     background-color: var(--hover-bg);
+    color: var(--active-tab-marker); /* Green highlight for active tab */
+}
+
+/* Push the bottom nav items (Settings + Profile) to the bottom */
+.nav-bottom {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.sidebar-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* Ensure Profile Trigger behaves like an icon button */
+.user-avatar-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* precise control */
 }
 
 /* Settings Menu */
 .settings-menu {
     position: absolute;
-    top: 0; 
-    left: 48px; /* To right of sidebar icon */
-    bottom: auto;
+    top: auto; 
+    left: 48px;
+    bottom: 5px; /* Open upwards relative to container */
     background-color: var(--modal-bg);
     box-shadow: 0 4px 12px var(--shadow-box);
     border-radius: 6px;
     padding: 8px 0;
-    min-width: 200px;
+    min-width: 220px; /* Increased slightly */
     display: flex;
     flex-direction: column;
     z-index: 2000;
-    cursor: default; /* Reset cursor */
+    cursor: default;
     animation: fadeIn 0.1s ease-out;
+    transform-origin: bottom left;
 }
 
 @keyframes fadeIn {
@@ -163,4 +190,81 @@
     font-weight: 300;
     margin-bottom: 10px;
     color: var(--text-secondary);
+}
+
+/* Theme Toggle Switch */
+.theme-toggle-row {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--active-tab-marker);
+    opacity: 0;
+    width: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow: hidden;
+}
+
+.theme-icon.active {
+    opacity: 1;
+    width: 24px;
+    transform: scale(1);
+    margin: 0 4px;
+}
+
+.theme-switch {
+    width: 36px;
+    height: 20px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+    position: relative;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.theme-switch.active {
+    background-color: var(--active-tab-marker);
+}
+
+.theme-switch-handle {
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Sidebar Header */
+.main-sidebar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 20px 24px 10px 24px;
+    margin: 0;
+}
+
+/* Fix text selection cursors */
+.icon-placeholder, 
+.user-avatar-trigger,
+.settings-menu-item {
+    user-select: none;
+    -webkit-user-select: none;
 }

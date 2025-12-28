@@ -7,6 +7,11 @@
 .message-bubble-container {
     display: flex;
     margin-bottom: 2px;
+    align-items: center; /* Align actions with bubble center */
+}
+
+.message-bubble-container.has-reactions {
+    margin-bottom: 24px; /* Space for absolute reaction pill */
 }
 
 .message-bubble {
@@ -18,6 +23,9 @@
     color: var(--text-primary);
     position: relative;
     box-shadow: 0 1px 0.5px var(--shadow-box);
+    overflow-wrap: break-word; /* Wrap long words */
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .message-bubble p {
@@ -54,48 +62,124 @@
     align-items: center;
 }
 
+.status-icon {
+    margin-left: 4px;
+    font-size: 11px;
+    letter-spacing: -2px; /* Pull checks closer */
+}
+
+.status-icon.seen {
+    color: #53bdeb; /* WhatsApp Blue */
+}
+
+.status-icon.received,
+.status-icon.sent {
+    color: var(--text-secondary);
+}
+
+/* Date Separator Pill */
+.date-separator {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+    width: 100%;
+}
+
+.date-pill {
+    background-color: #2a3942;
+    color: #e9edef;
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
 /* Clearfix for float if needed, but flex handles container */
 
-/* Message Options Button (down arrow) */
-.message-options-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    /* Gradient needs special handling for dark mode, using simple bg for now or variables */
-    /* Since gradients are complex with variables, I'll use simple background or variable for gradient stops */
-    background: none; 
-    /* NOTE: Gradients are hard to theme directly with simple vars unless we define the whole gradient string. */
-    /* Falling back to simple transparent background as icons are usually visible on hover */
-    
-    border: none;
+/* Message Actions Group (Side by Side) */
+.message-actions {
+    position: relative; /* Anchor for popovers */
+    display: flex;
+    gap: 5px;
+    margin: 0 8px; /* Spacing from bubble */
+    z-index: 100;
+}
+
+.message-action-btn {
+    background: var(--bg-color-header); /* Small background for visibility? */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
     cursor: pointer;
-    padding: 0 5px;
-    display: none; /* Show on hover parent */
-    border-radius: 50%;
     font-size: 16px;
     color: var(--icon-color);
     line-height: 1;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2px var(--shadow-box);
 }
 
-/* Adjustments for gradients could be skipped or simplified */
-.message-received .message-options-btn {
-     background-color: var(--incoming-msg-bg);
-     box-shadow: -10px 0 10px var(--incoming-msg-bg); /* Fake fade */
-}
-.message-sent .message-options-btn {
-     background-color: var(--outgoing-msg-bg);
-     box-shadow: -10px 0 10px var(--outgoing-msg-bg);
+.message-action-btn:hover {
+    background-color: var(--hover-bg);
 }
 
-.message-bubble:hover .message-options-btn {
-    display: block;
+/* Reaction Picker */
+.reaction-picker-popover {
+    position: absolute;
+    bottom: 35px; /* Above buttons */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--modal-bg);
+    padding: 6px 12px;
+    border-radius: 24px;
+    box-shadow: 0 2px 8px var(--shadow-box);
+    display: flex;
+    gap: 8px;
+    z-index: 200;
+    white-space: nowrap;
+}
+
+.reaction-emoji-btn {
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.reaction-emoji-btn:hover {
+    transform: scale(1.4);
+}
+
+/* Reactions Display on Bubble */
+.message-reactions {
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    background-color: var(--modal-bg); /* Use modal bg for contrast */
+    padding: 2px 6px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px var(--shadow-box);
+    font-size: 11px;
+    display: flex;
+    gap: 2px;
+    z-index: 10;
+    border: 1px solid var(--border-color);
+    min-height: 18px;
+    align-items: center;
+}
+
+.message-received-container .message-reactions {
+    left: 10px;
+    right: auto;
 }
 
 /* Dropdown Menu */
 .message-options-menu {
     position: absolute;
-    top: 25px;
-    right: 10px;
+    top: 25px; /* Adjusted to be below the new message-action-btn */
+    right: 0; /* Aligned to the right of the message-actions parent */
     background-color: var(--modal-bg);
     box-shadow: 0 2px 5px var(--shadow-box);
     border-radius: 4px;
@@ -142,3 +226,10 @@
 
 .edit-save-btn { color: var(--active-tab-marker); }
 .edit-cancel-btn { color: #ea0038; }
+
+/* Upward Menu */
+.message-options-menu.open-up {
+    top: auto;
+    bottom: 35px; /* Above trigger */
+    transform-origin: bottom right;
+}

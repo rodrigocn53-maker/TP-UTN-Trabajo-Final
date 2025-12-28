@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import './ContactList.css'
 import { Link } from 'react-router'
 import { ContactListContext } from '../Context/Contexts'
@@ -6,8 +6,26 @@ import { ContactListContext } from '../Context/Contexts'
 export default function ContactList() {
     const {
         contactState,
-        loadingContactsState
+        loadingContactsState,
+        searchString,
+        toggleBlockContact, 
+        deleteContact
     } = useContext(ContactListContext)
+
+    const [openMenuId, setOpenMenuId] = useState(null)
+    const menuRef = useRef(null)
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setOpenMenuId(null);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     if(loadingContactsState){
         return (
@@ -15,18 +33,31 @@ export default function ContactList() {
         )
     }
 
-    if(contactState.length === 0){
+    const activeContacts = contactState.filter(contact => contact.last_message_content && contact.last_message_content.trim() !== '');
+
+    if(activeContacts.length === 0){
+        if (searchString) {
+            return (
+                <div className='no-contacts-placeholder'>
+                    <p>No se encontró ningún contacto.</p>
+                </div>
+            )
+        }
         return (
-            <div>No hay contactos</div>
+            <div className='no-contacts-placeholder'>
+                <p>No tienes chats activos.</p>
+                <p>Busca un contacto en el directorio 👥 para empezar.</p>
+            </div>
         )
     }
-return (
-    <div className='contact-list-container'>
+
+    return (
+    <div className='contact-list-container' ref={menuRef}>
         {
-            contactState.map(
+            activeContacts.map(
                 function (contact){
                     return (
-                        <Link className='contact-item' key={contact.contact_id} to={'/chat/' + contact.contact_id}>
+                        <Link className='contact-item relative-container' key={contact.contact_id} to={'/chat/' + contact.contact_id}>
                             <div className='contact-avatar-wrapper'>
                                 <img className='contact-avatar' src={contact.contact_avatar} alt={contact.contact_name} />
                             </div>
@@ -42,13 +73,62 @@ return (
                                     </span>
                                 </div>
                                 <div className='contact-details'>
-                                    <p className='contact-last-message'>{contact.last_message_content}</p>
+                                    <p className='contact-last-message'>
+                                        {/* Status Icon for Last Message */}
+                                        {contact.last_message_state === 'SEEN' && <span className='status-icon-list seen'>✓✓ </span>}
+                                        {contact.last_message_state === 'RECEIVED' && <span className='status-icon-list received'>✓✓ </span>}
+                                        {(contact.last_message_state === 'SENT' || !contact.last_message_state) && <span className='status-icon-list sent'>✓ </span>}
+                                        
+                                        {contact.last_message_content}
+                                    </p>
                                     {
                                         contact.contact_unseen_messages > 0 &&
                                         <span className='contact-badge'>{contact.contact_unseen_messages}</span>
                                     }
                                 </div>
                             </div>
+                            
+                            {/* Hover Menu Trigger */}
+                            <button 
+                                className={`contact-options-trigger ${openMenuId === contact.contact_id ? 'active' : ''}`}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    setOpenMenuId(openMenuId === contact.contact_id ? null : contact.contact_id)
+                                }}
+                            >
+                                <svg viewBox="0 0 19 20" width="19" height="20" style={{display: 'block'}}>
+                                    <path fill="currentColor" d="M3.8 6.7l5.7 5.7 5.7-5.7 1.6 1.6-7.3 7.2-7.3-7.2 1.6-1.6z"></path>
+                                </svg>
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {openMenuId === contact.contact_id && (
+                                <div className='sidebar-dropdown-menu'>
+                                    <div 
+                                        className='sidebar-menu-item'
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                            toggleBlockContact(contact.contact_id)
+                                            setOpenMenuId(null)
+                                        }}
+                                    >
+                                        {contact.isBlocked ? 'Desbloquear' : 'Bloquear'}
+                                    </div>
+                                    <div 
+                                        className='sidebar-menu-item'
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                            deleteContact(contact.contact_id)
+                                            setOpenMenuId(null)
+                                        }}
+                                    >
+                                        Eliminar chat
+                                    </div>
+                                </div>
+                            )}
                         </Link>
                     )
                 }

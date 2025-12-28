@@ -1,0 +1,94 @@
+.calls-history-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color-sidebar);
+}
+
+.calls-header {
+    padding: 15px 20px;
+    background-color: var(--bg-color-header);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.calls-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 18px;
+}
+
+.calls-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.call-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.call-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.call-avatar-wrapper {
+    width: 49px;
+    height: 49px;
+    margin-right: 15px;
+}
+
+.call-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.call-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.call-name {
+    color: var(--text-primary);
+    font-size: 17px;
+    margin-bottom: 3px;
+}
+
+.missed-name {
+    color: #f15c6d; /* Red for missed */
+}
+
+.call-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.call-date {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.call-icon {
+    font-size: 14px;
+}
+
+.call-icon.missed {
+    color: #f15c6d;
+}
+.call-icon.incoming {
+    color: var(--active-tab-marker);
+}
+.call-icon.outgoing {
+    color: var(--active-tab-marker);
+}
+
+.call-action {
+    font-size: 20px;
+    color: var(--active-tab-marker);
+    padding: 10px;
+}

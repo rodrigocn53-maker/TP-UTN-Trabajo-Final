@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router'
 import ContactSidebar from '../../ContactSideBar/ContactSideBar'
-import { ContactDetailContext } from '../../Context/Contexts' 
+import { ContactDetailContext, ContactListContext } from '../../Context/Contexts' 
 import AddNewMenssage from '../../AddNewMenssage/AddNewMenssage'
 import MessagesList from '../../MessagesList/MessagesList'
 import ContactProfileInfo from '../../ContactProfileInfo/ContactProfileInfo'
@@ -10,10 +11,32 @@ import './MessagesScreen.css'
 export default function MessagesScreen() {
 
     const { contactSelected, loadingContact } = useContext(ContactDetailContext)
+    const { toggleBlockContact, deleteContact, contactState } = useContext(ContactListContext)
+    const navigate = useNavigate()
     // Removed resetUnseenMessages from here as it caused a loop and is already handled in ContactDetailContext
     const [showProfile, setShowProfile] = useState(false)
     const [startSearch, setStartSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
+    const [showChatMenu, setShowChatMenu] = useState(false)
+
+    // Get live block status
+    const currentContact = contactState.find(c => Number(c.contact_id) === Number(contactSelected?.contact_id))
+    const isBlocked = currentContact?.isBlocked || false
+
+    const menuRef = useRef(null)
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowChatMenu(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     console.log(contactSelected, loadingContact)
 
@@ -44,8 +67,32 @@ export default function MessagesScreen() {
                                 </div>
                             </div>
                             <div className='chat-header-actions'>
-                                <button className={`icon-btn ${startSearch ? 'active-btn' : ''}`} onClick={() => setStartSearch(!startSearch)}>🔍</button>
-                                <button className='icon-btn'>⋮</button>
+                                <button className={`icon-btn ${startSearch ? 'active-btn' : ''}`} onClick={() => setStartSearch(!startSearch)}>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                                </button>
+                                <div className='relative-menu-container' ref={menuRef}>
+                                    <button className='icon-btn' onClick={() => setShowChatMenu(!showChatMenu)}>
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                                    </button>
+                                    {showChatMenu && (
+                                        <div className='chat-options-menu'>
+                                            <div className='menu-item' onClick={toggleProfile}>Info. del contacto</div>
+                                            <div className='menu-item'>Llamar</div>
+                                            <div className='menu-item' onClick={() => {
+                                                toggleBlockContact(contactSelected.contact_id)
+                                                setShowChatMenu(false)
+                                            }}>
+                                                {isBlocked ? 'Desbloquear' : 'Bloquear'}
+                                            </div>
+                                            <div className='menu-item'>Reportar</div>
+                                            <div className='menu-item'>Vaciar chat</div>
+                                            <div className='menu-item' onClick={() => {
+                                                deleteContact(contactSelected.contact_id)
+                                                navigate('/')
+                                            }}>Eliminar chat</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
@@ -63,12 +110,20 @@ export default function MessagesScreen() {
                                 <button className='close-search-btn' onClick={() => {
                                     setStartSearch(false)
                                     setSearchQuery('')
-                                }}>✕</button>
+                                }}>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+                                </button>
                             </div>
                         )}
                         
                         <div className='messages-area'>
-                            <MessagesList messages={searchQuery ? filteredMessages : null}/>
+                            {searchQuery && filteredMessages.length === 0 ? (
+                                <div className='no-results-message'>
+                                    No se encontró ningún mensaje.
+                                </div>
+                            ) : (
+                                <MessagesList messages={searchQuery ? filteredMessages : null}/>
+                            )}
                         </div>
                         
                         <AddNewMenssage/>

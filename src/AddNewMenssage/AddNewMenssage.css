@@ -1,10 +1,27 @@
+/* Message Input Container */
 .message-input-container {
     height: 62px;
-    background-color: #f0f2f5;
+    background-color: var(--bg-color-sidebar);
     padding: 5px 16px;
     display: flex;
     align-items: center;
-    border-left: 1px solid #d1d7db; /* Match sidebar border */
+    border-left: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    position: relative;
+    color: var(--text-primary);
+}
+
+.emoji-picker-wrapper {
+    position: absolute;
+    bottom: 65px;
+    left: 10px;
+    z-index: 100;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px; /* Matching picker radius */
+}
+
+.active-emoji-btn {
+    color: var(--active-tab-marker) !important; /* Force green/active color */
 }
 
 .message-form {
@@ -18,15 +35,15 @@
     flex-grow: 1;
     padding: 9px 12px;
     margin: 5px 0;
-    border: 1px solid white;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--search-bg); /* Use search bar bg for input */
     font-size: 15px;
     outline: none;
     min-height: 20px;
     max-height: 100px;
-    /* font-family: inherit; */
-    resize: none; /* Disable manual resize if using textarea */
+    resize: none;
+    color: var(--text-primary);
 }
 
 

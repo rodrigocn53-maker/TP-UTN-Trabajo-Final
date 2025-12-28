@@ -1,30 +1,55 @@
-import React, { useContext } from 'react'
-import { ContactDetailContext } from '../Context/Contexts'
+import React, { useContext, useState } from 'react'
+import { ContactDetailContext, ThemeContext } from '../Context/Contexts'
 import './AddNewMenssage.css'
+import EmojiPicker from 'emoji-picker-react'
 
 export default function AddNewMenssage() {
     const { AddNewMenssage: addMessage } = useContext(ContactDetailContext)
+    const { isDark } = useContext(ThemeContext)
+    const [messageContent, setMessageContent] = useState('')
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     function handleSubmitNewMenssage (event){
         event.preventDefault()
-        const message = event.target.mensaje.value
-        if (!message.trim()) return; 
-        addMessage(message)
-        event.target.mensaje.value = '' // clear input
+        if (!messageContent.trim()) return; 
+        addMessage(messageContent)
+        setMessageContent('') // clear input
+        setShowEmojiPicker(false)
+    }
+
+    const onEmojiClick = (emojiData) => {
+        setMessageContent(prev => prev + emojiData.emoji)
     }
 
     return (
         <div className='message-input-container'>
-            <button className='input-icon-btn'>😊</button>
+            {showEmojiPicker && (
+                <div className='emoji-picker-wrapper'>
+                    <EmojiPicker 
+                        onEmojiClick={onEmojiClick}
+                        theme={isDark ? 'dark' : 'light'}
+                        width={300}
+                        height={400}
+                        previewConfig={{ showPreview: false }}
+                    />
+                </div>
+            )}
+            <button 
+                className={`input-icon-btn ${showEmojiPicker ? 'active-emoji-btn' : ''}`} 
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
+                😊
+            </button>
             <button className='input-icon-btn'>➕</button>
             <form onSubmit={handleSubmitNewMenssage} className='message-form'>
-                {/* Using simple input for now, could be textarea later */}
                 <input 
                     id='mensaje' 
                     className='message-input' 
                     placeholder='Escribe un mensaje' 
                     autoComplete='off'
                     autoFocus
+                    value={messageContent}
+                    onChange={(e) => setMessageContent(e.target.value)}
                 />
                 <button className='input-icon-btn send-btn'>➤</button>
             </form>

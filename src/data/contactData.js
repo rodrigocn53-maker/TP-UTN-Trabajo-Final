@@ -96,6 +96,42 @@ const contact_data = [
         }
     ]
     },
+    {
+    contact_id: 5,
+    contact_name: 'Mamá',
+    contact_avatar: 'https://ui-avatars.com/api/?name=Mama&background=random',
+    contact_bio: 'Disponible',
+    contact_phone: '+54 9 11 1234 5678',
+    contact_unseen_messages: 0,
+    last_message_content: '',
+    last_message_state: 'SEEN',
+    last_message_created_at: new Date(),
+    messages: []
+    },
+    {
+    contact_id: 6,
+    contact_name: 'Jefe',
+    contact_avatar: 'https://ui-avatars.com/api/?name=Boss&background=random',
+    contact_bio: 'En reunión.',
+    contact_phone: '+54 9 11 8765 4321',
+    contact_unseen_messages: 0,
+    last_message_content: '',
+    last_message_state: 'SEEN',
+    last_message_created_at: new Date(),
+    messages: []
+    },
+    {
+    contact_id: 7,
+    contact_name: 'Juan Mecánico',
+    contact_avatar: 'https://ui-avatars.com/api/?name=Juan&background=random',
+    contact_bio: 'Solo WhatsApp',
+    contact_phone: '+54 9 11 1122 3344',
+    contact_unseen_messages: 0,
+    last_message_content: '',
+    last_message_state: 'SEEN',
+    last_message_created_at: new Date(),
+    messages: []
+    },
 ]
 
 export default contact_data

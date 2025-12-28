@@ -93,7 +93,7 @@
 }
 
 .contact-badge {
-    background-color: var(--active-tab-marker); /* WhatsApp Green */
+    background-color: var(--active-tab-marker);
     color: white;
     font-size: 12px;
     font-weight: 500;
@@ -105,4 +105,80 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0 4px;
+    transition: transform 0.2s ease;
+}
+
+.contact-item:hover .contact-badge {
+    transform: translateX(-24px); /* Reduced shift slightly */
+}
+
+/* Sidebar Menu Trigger */
+.contact-item {
+    position: relative;
+}
+
+.contact-options-trigger {
+    position: absolute;
+    right: 15px;
+    top: 50%; /* Center vertically in the contact item */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none;
+    padding: 0;
+    z-index: 10;
+    line-height: 1;
+    color: var(--text-secondary);
+}
+
+.contact-item:hover .contact-options-trigger,
+.contact-options-trigger.active {
+    display: block;
+}
+
+/* Sidebar Dropdown Menu */
+.sidebar-dropdown-menu {
+    position: absolute;
+    top: 35px;
+    right: 30px;
+    background-color: var(--modal-bg);
+    width: 160px;
+    box-shadow: 0 4px 12px var(--shadow-box);
+    border-radius: 6px;
+    z-index: 999;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu-item {
+    padding: 10px 15px;
+    font-size: 14.5px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sidebar-menu-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.contact-list-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.contact-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.main-sidebar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 24px 24px 14px 24px;
+    margin: 0;
 }

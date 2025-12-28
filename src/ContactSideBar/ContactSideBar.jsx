@@ -18,6 +18,7 @@ export default function ContactSidebar() {
 
     return (
         <aside className={`aside ${isDark ? 'aside-dark' : ''}`}>
+            <h1 className='main-sidebar-title'>Chats</h1>
             <div>
                 <ContactSearchForm/>
             </div>

@@ -10,7 +10,7 @@ const ContactDetailContextProvider = ({ children }) => {
     const [loadingContact, setLoadingContact] = useState(true)
     
     // Consume ContactListContext to update the list when a message is sent
-    const { updateLastMessage, resetUnseenMessages } = useContext(ContactListContext);
+    const { updateLastMessage, resetUnseenMessages, contactState } = useContext(ContactListContext);
 
     const loadContactById = useCallback(() => {
         setLoadingContact(true)
@@ -31,8 +31,14 @@ const ContactDetailContextProvider = ({ children }) => {
     }, [contact_id]) // Removed resetUnseenMessages to avoid potential infinite loop if the function reference changes
 
     function AddNewMenssage(content){
+        // Check if blocked
+        const currentContact = contactState.find(c => Number(c.contact_id) === Number(contact_id));
+        const isBlocked = currentContact?.isBlocked;
+        const msgState = isBlocked ? 'SENT' : 'RECEIVED'; // Mock: Blocked = single check, Unblocked = double check
+
         // Save to service (persistence)
         const new_message = saveMessageToContact(contact_id, content);
+        new_message.messages_state = msgState; // Override mock default
         
         // Update local state immediately
         setContactSelected({
@@ -40,7 +46,7 @@ const ContactDetailContextProvider = ({ children }) => {
             messages: [...contactSelected.messages, new_message]
         })
         
-        updateLastMessage(contact_id, content, new_message.messages_create_at)
+        updateLastMessage(contact_id, content, new_message.messages_create_at, msgState)
     }
 
     function deleteMessage (message_id) {
@@ -66,6 +72,22 @@ const ContactDetailContextProvider = ({ children }) => {
         })
     }
 
+    function addReaction(message_id, emoji) {
+        setContactSelected({
+            ...contactSelected,
+            messages: contactSelected.messages.map(msg => {
+                if(msg.message_id === message_id){
+                    const existing = msg.reactions || [];
+                    const newReactions = existing.includes(emoji) 
+                        ? [] // Toggle off (clear)
+                        : [emoji]; // Replace with new
+                    return {...msg, reactions: newReactions}
+                }
+                return msg
+            })
+        })
+    }
+
     useEffect(
         () => {
             loadContactById()
@@ -79,7 +101,8 @@ const ContactDetailContextProvider = ({ children }) => {
         loadContactById,
         AddNewMenssage,
         deleteMessage,
-        editMessage
+        editMessage,
+        addReaction
     }
 
     

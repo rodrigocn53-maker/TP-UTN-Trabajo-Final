@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './ContactProfileInfo.css'
+import { ContactListContext } from '../Context/Contexts'
 
 export default function ContactProfileInfo({ contact, onClose, isOpen }) {
+    const { toggleBlockContact, contactState } = useContext(ContactListContext)
+
     if (!contact) return null;
+
+    const currentContact = contactState.find(c => Number(c.contact_id) === Number(contact.contact_id))
+    const isBlocked = currentContact?.isBlocked || false
 
     return (
         <div className={`profile-info-container ${isOpen ? 'open' : ''}`}>
@@ -32,7 +38,12 @@ export default function ContactProfileInfo({ contact, onClose, isOpen }) {
             </div>
 
             <div className='profile-actions'>
-                <button className='action-btn text-danger'>Bloquear a {contact.contact_name}</button>
+                <button 
+                    className='action-btn text-danger'
+                    onClick={() => toggleBlockContact(contact.contact_id)}
+                >
+                    {isBlocked ? `Desbloquear a ${contact.contact_name}` : `Bloquear a ${contact.contact_name}`}
+                </button>
                 <button className='action-btn text-danger'>Reportar a {contact.contact_name}</button>
                 <button className='action-btn text-danger'>Eliminar chat</button>
             </div>

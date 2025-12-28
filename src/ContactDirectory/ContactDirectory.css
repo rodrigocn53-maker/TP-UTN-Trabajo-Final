@@ -1,0 +1,72 @@
+.contact-directory-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color-sidebar);
+}
+
+.directory-header {
+    padding: 15px 20px;
+    background-color: var(--bg-color-header);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.directory-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 18px;
+}
+
+.directory-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.directory-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.directory-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.directory-avatar-wrapper {
+    width: 49px;
+    height: 49px;
+    margin-right: 15px;
+}
+
+.directory-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.directory-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.directory-name {
+    color: var(--text-primary);
+    font-size: 17px;
+    margin-bottom: 3px;
+    font-weight: 400;
+}
+
+.directory-status {
+    color: var(--text-secondary);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
