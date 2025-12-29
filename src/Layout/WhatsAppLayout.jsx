@@ -69,6 +69,17 @@ export default function WhatsAppLayout() {
                     </span>
                 </div>
               </div>
+              <div 
+                className='mobile-settings-item' 
+                onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setShowUserProfile(true); 
+                    setActiveTab(''); 
+                    setShowMobileSettings(false); 
+                }}
+              >
+                Perfil
+              </div>
               <div className='mobile-settings-item'>Configuración</div>
               <div className='mobile-settings-item'>Cerrar sesión</div>
             </div>
