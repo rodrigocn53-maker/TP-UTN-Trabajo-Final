@@ -10,7 +10,7 @@ const ContactDetailContextProvider = ({ children }) => {
     const [loadingContact, setLoadingContact] = useState(true)
     
     // Consume ContactListContext to update the list when a message is sent
-    const { updateLastMessage, resetUnseenMessages, contactState } = useContext(ContactListContext);
+    const { updateLastMessage, addMessage, resetUnseenMessages, contactState, updateMessageStatus } = useContext(ContactListContext);
 
     // Effect 1: Handle Chat Entry (Loading + Reset Unseen)
     useEffect(() => {
@@ -34,26 +34,44 @@ const ContactDetailContextProvider = ({ children }) => {
     function AddNewMenssage(content){
         const currentContact = contactState.find(c => Number(c.contact_id) === Number(contact_id));
         const isBlocked = currentContact?.isBlocked;
-        const msgState = isBlocked ? 'SENT' : 'RECEIVED';
-
+        
         const new_message = {
             message_id: Date.now(),
             message_content: content,
             message_author: 'YO',
             messages_create_at: new Date().toISOString(),
-            messages_state: msgState
+            messages_state: 'SENT',
+            send_by_me: true
         };
 
-        // Try to save to persistence service (only works for static contacts)
         saveMessageToContact(contact_id, content);
 
-        // Update local state immediately
-        setContactSelected({
-            ...contactSelected,
-            messages: [...contactSelected.messages, new_message]
-        })
+        setContactSelected(prev => ({
+            ...prev,
+            messages: [...prev.messages, new_message]
+        }));
         
-        updateLastMessage(contact_id, content, new_message.messages_create_at, msgState)
+        addMessage(contact_id, new_message);
+
+        if (!isBlocked) {
+            setTimeout(() => {
+                updateMessageStatus(contact_id, new_message.message_id, 'RECEIVED');
+                updateLastMessage(contact_id, content, new_message.messages_create_at, 'RECEIVED');
+                setContactSelected(prev => ({
+                    ...prev,
+                    messages: prev.messages.map(m => m.message_id === new_message.message_id ? {...m, messages_state: 'RECEIVED'} : m)
+                }));
+            }, 1000);
+
+            setTimeout(() => {
+                updateMessageStatus(contact_id, new_message.message_id, 'SEEN');
+                updateLastMessage(contact_id, content, new_message.messages_create_at, 'SEEN');
+                setContactSelected(prev => ({
+                    ...prev,
+                    messages: prev.messages.map(m => m.message_id === new_message.message_id ? {...m, messages_state: 'SEEN'} : m)
+                }));
+            }, 3000);
+        }
     }
 
     function deleteMessage (message_id) {

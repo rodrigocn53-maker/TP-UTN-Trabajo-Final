@@ -70,6 +70,9 @@ export default function MessagesScreen() {
                 : <>
                     <div className='chat-main-area'>
                         <div className='chat-header'>
+                            <button className='mobile-back-btn' onClick={() => navigate('/')}>
+                                ←
+                            </button>
                             <div className='chat-header-info' onClick={toggleProfile}>
                                 <img src={contactSelected.contact_avatar} alt={contactSelected.contact_name} className='chat-header-avatar'/>
                                 <div className='chat-header-text'>

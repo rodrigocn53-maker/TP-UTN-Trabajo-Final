@@ -1,0 +1,34 @@
+.filter-pills-container {
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--bg-color-panel);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.filter-pills-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.filter-pill {
+    padding: 6px 16px;
+    border-radius: 16px;
+    border: none;
+    background-color: var(--bg-color-header);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+    background-color: var(--hover-bg);
+}
+
+.filter-pill.active {
+    background-color: var(--active-tab-marker);
+    color: #111b21;
+}

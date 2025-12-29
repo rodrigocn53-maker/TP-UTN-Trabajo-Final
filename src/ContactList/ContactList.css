@@ -182,3 +182,34 @@
     padding: 24px 24px 14px 24px;
     margin: 0;
 }
+
+.no-contacts-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    text-align: center;
+    color: var(--text-secondary);
+    min-height: 200px;
+}
+
+.no-contacts-placeholder p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #8696a0; /* WhatsApp's lighter gray for empty states */
+    line-height: 1.5;
+}
+
+.no-contacts-placeholder p:first-child {
+    font-size: 15px;
+    color: #667781; /* Slightly darker for the main message */
+}
+
+.favorite-star {
+    font-size: 13px;
+    margin-left: 6px;
+    vertical-align: middle;
+    display: inline-block;
+}
+

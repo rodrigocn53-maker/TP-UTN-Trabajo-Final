@@ -7,6 +7,7 @@ const ContactListContextProvider = () => {
     const [contactState, setContactState] = useState([])
     const [loadingContactsState, setLoadingContactState] = useState(true)
     const [searchString, setSearchString] = useState('')
+    const [filterType, setFilterType] = useState('all')
 
 
     const loadContactList = useCallback(() => {
@@ -65,14 +66,15 @@ const ContactListContextProvider = () => {
         [loadContactList]
     )
 
-    const updateLastMessage = useCallback((contactId, newContent, newTime, newState = 'SENT') => {
+    const updateLastMessage = useCallback((contactId, newContent, newTime, newState = 'SENT', newAuthor = 'YO') => {
         setContactState(prevContacts => prevContacts.map(contact => {
             if (Number(contact.contact_id) === Number(contactId)) {
                 return {
                     ...contact,
                     last_message_content: newContent,
                     last_message_created_at: newTime,
-                    last_message_state: newState 
+                    last_message_state: newState,
+                    last_message_author: newAuthor
                 };
             }
             return contact;
@@ -87,7 +89,8 @@ const ContactListContextProvider = () => {
                     messages: [...contact.messages, fullMessage],
                     last_message_content: fullMessage.message_content,
                     last_message_created_at: fullMessage.messages_create_at,
-                    last_message_state: fullMessage.messages_state
+                    last_message_state: fullMessage.messages_state,
+                    last_message_author: fullMessage.message_author
                 };
             }
             return contact;
@@ -111,6 +114,27 @@ const ContactListContextProvider = () => {
         contact.contact_name.toLowerCase().includes(searchString.toLowerCase())
     );
 
+    // Sort: Pinned chats first, then by last message time
+    const sortedContacts = [...filteredContacts].sort((a, b) => {
+        // Pinned chats always come first
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        
+        // If both pinned or both not pinned, sort by last message time
+        const timeA = new Date(a.last_message_created_at).getTime();
+        const timeB = new Date(b.last_message_created_at).getTime();
+        return timeB - timeA; // Most recent first
+    });
+
+    // Apply filter type (all, unread, favorites, groups)
+    const typeFilteredContacts = sortedContacts.filter(contact => {
+        if (filterType === 'all') return true;
+        if (filterType === 'unread') return contact.contact_unseen_messages > 0;
+        if (filterType === 'favorites') return contact.isFavorite;
+        if (filterType === 'groups') return contact.isGroup;
+        return true;
+    });
+
     // Calculate Global Unread Count
     const totalUnread = contactState.reduce((acc, contact) => acc + (contact.contact_unseen_messages || 0), 0);
 
@@ -130,8 +154,49 @@ const ContactListContextProvider = () => {
         setContactState(prevContacts => prevContacts.filter(c => Number(c.contact_id) !== Number(contactId)));
     }, []);
 
+    const toggleFavorite = useCallback((contactId) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    isFavorite: !contact.isFavorite
+                };
+            }
+            return contact;
+        }));
+    }, []);
+
+    const togglePinChat = useCallback((contactId) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    isPinned: !contact.isPinned
+                };
+            }
+            return contact;
+        }));
+    }, []);
+
+    const updateMessageStatus = useCallback((contactId, messageId, newStatus) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    // Check if messages exists, map if so
+                    messages: contact.messages ? contact.messages.map(msg => 
+                        msg.message_id === messageId 
+                        ? { ...msg, messages_state: newStatus }
+                        : msg
+                    ) : []
+                };
+            }
+            return contact;
+        }));
+    }, []);
+
     const providerValues = {
-        contactState: filteredContacts, // Use filtered list
+        contactState: typeFilteredContacts, // Use filtered list
         loadingContactsState,
         loadContactList,
         updateLastMessage,
@@ -140,7 +205,12 @@ const ContactListContextProvider = () => {
         createContact,
         createGroup,
         toggleBlockContact,
-        deleteContact, // Exported
+        deleteContact,
+        updateMessageStatus,
+        toggleFavorite,
+        togglePinChat,
+        filterType,
+        setFilterType,
         searchString, 
         setSearchString,
         totalUnread

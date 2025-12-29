@@ -196,3 +196,29 @@
     text-align: center;
     padding: 20px;
 }
+
+/* Mobile Back Button */
+.mobile-back-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0 12px;
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .mobile-back-btn {
+        display: block;
+    }
+
+    .chat-header {
+        padding: 0 8px;
+    }
+
+    .messages-area {
+        padding: 10px 3% 30px 3%;
+    }
+}

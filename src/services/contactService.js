@@ -43,7 +43,8 @@ export function saveMessageToContact(contact_id, message_content) {
             messages_create_at: new Date(),
             send_by_me: true
         }
-        contact.messages.push(new_message);
+        // COMMENTED: This was causing duplicate messages since we use addMessage in ContactDetailContext
+        // contact.messages.push(new_message);
         
         // Update key fields if needed for list view
         contact.last_message_content = message_content;

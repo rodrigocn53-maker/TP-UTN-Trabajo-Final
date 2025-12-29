@@ -38,9 +38,9 @@ export default function AddNewMenssage() {
                 className={`input-icon-btn ${showEmojiPicker ? 'active-emoji-btn' : ''}`} 
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             >
-                😊
+                ☺
             </button>
-            <button className='input-icon-btn'>➕</button>
+            <button className='input-icon-btn'>📎</button>
             <form onSubmit={handleSubmitNewMenssage} className='message-form'>
                 <input 
                     id='mensaje' 

@@ -257,7 +257,7 @@
     font-size: 22px;
     font-weight: 700;
     color: var(--text-primary);
-    padding: 20px 24px 10px 24px;
+    padding: 20px 24px 0px 24px;
     margin: 0;
 }
 
@@ -267,4 +267,86 @@
 .settings-menu-item {
     user-select: none;
     -webkit-user-select: none;
+}
+
+/* Mobile Settings Menu */
+.mobile-settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+    display: none;
+}
+
+.mobile-settings-menu {
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    background-color: var(--modal-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-box);
+    min-width: 200px;
+    overflow: hidden;
+}
+
+.mobile-settings-item {
+    padding: 14px 20px;
+    color: var(--text-primary);
+    font-size: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-settings-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-settings-item:active {
+    background-color: var(--hover-bg);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .whatsapp-layout-container {
+        grid-template-columns: 1fr; /* Single column */
+        min-width: unset;
+    }
+
+    /* Hide desktop sidebar on mobile */
+    .community-sidebar {
+        display: none;
+    }
+
+    /* Hide empty-chat message on mobile */
+    .empty-chat {
+        display: none;
+    }
+
+    /* By default, show contacts sidebar (chat list) */
+    .contacts-sidebar {
+        display: flex;
+    }
+
+    /* By default, hide chat area */
+    .chat-area {
+        display: none;
+    }
+
+    /* When viewing a chat (mobile-chat-view class added) */
+    .mobile-chat-view .contacts-sidebar {
+        display: none;
+    }
+
+    .mobile-chat-view .chat-area {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Show mobile settings overlay */
+    .mobile-settings-overlay {
+        display: block;
+    }
 }

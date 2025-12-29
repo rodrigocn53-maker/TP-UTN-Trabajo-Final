@@ -124,7 +124,7 @@ export default function MessageItem({ message, avatar }) {
                         onClick={() => setShowReactionPicker(!showReactionPicker)}
                         title="Reaccionar"
                     >
-                        😊
+                        ☺
                     </button>
                     <button 
                         className='message-action-btn' 

@@ -1,3 +1,8 @@
+/* Estado por defecto (Escritorio) para las acciones móviles */
+.mobile-sidebar-actions {
+    display: none;
+}
+
 .aside {
     height: 100%;
     display: flex;
@@ -5,3 +10,35 @@
     background-color: var(--bg-color-sidebar);
 }
 
+@media (max-width: 768px) {
+    .aside {
+        width: 100vw;
+        height: calc(100vh - 60px); /* Ajuste para la navegación inferior */
+        overflow-y: auto;
+    }
+
+/*     .main-sidebar-title {
+        display: none !important; - Revertido según petición del usuario
+    }
+ */
+    /* Estilos fusionados del header móvil */
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 16px; /* Espacio para iconos */
+        width: 100%;
+    }
+
+    /* Resetear padding del título en contexto móvil para evitar espacio excesivo */
+    .main-sidebar-title {
+        flex-grow: 1;
+        padding-right: 0; 
+    }
+
+    .mobile-sidebar-actions {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+}

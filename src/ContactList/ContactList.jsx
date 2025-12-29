@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import './ContactList.css'
 import { Link } from 'react-router'
 import { ContactListContext } from '../Context/Contexts'
+import FilterPills from './FilterPills'
 
 export default function ContactList() {
     const {
@@ -9,7 +10,10 @@ export default function ContactList() {
         loadingContactsState,
         searchString,
         toggleBlockContact, 
-        deleteContact
+        deleteContact,
+        toggleFavorite,
+        togglePinChat,
+        filterType
     } = useContext(ContactListContext)
 
     const [openMenuId, setOpenMenuId] = useState(null)
@@ -29,30 +33,50 @@ export default function ContactList() {
 
     if(loadingContactsState){
         return (
-            <div>Cargando contactos...</div>
+            <>
+                <FilterPills />
+                <div>Cargando contactos...</div>
+            </>
         )
     }
 
     const activeContacts = contactState.filter(contact => contact.last_message_content && contact.last_message_content.trim() !== '');
 
-    if(activeContacts.length === 0){
+    const getEmptyMessage = () => {
         if (searchString) {
-            return (
-                <div className='no-contacts-placeholder'>
-                    <p>No se encontró ningún contacto.</p>
-                </div>
-            )
+            return 'No se encontró ningún contacto.';
         }
+        
+        switch(filterType) {
+            case 'unread':
+                return 'No tienes chats sin leer.';
+            case 'favorites':
+                return 'No tienes chats favoritos.';
+            case 'groups':
+                return 'No tienes grupos creados.';
+            default:
+                return 'No tienes chats activos.';
+        }
+    }
+
+    if(activeContacts.length === 0){
         return (
-            <div className='no-contacts-placeholder'>
-                <p>No tienes chats activos.</p>
-                <p>Busca un contacto en el directorio 👥 para empezar.</p>
-            </div>
+            <>
+                <FilterPills />
+                <div className='no-contacts-placeholder'>
+                    <p>{getEmptyMessage()}</p>
+                    {filterType === 'all' && !searchString && (
+                        <p>Busca un contacto en el directorio 👥 para empezar.</p>
+                    )}
+                </div>
+            </>
         )
     }
 
     return (
-    <div className='contact-list-container' ref={menuRef}>
+    <>
+        <FilterPills />
+        <div className='contact-list-container' ref={menuRef}>
         {
             activeContacts.map(
                 function (contact){
@@ -63,7 +87,10 @@ export default function ContactList() {
                             </div>
                             <div className='contact-info'>
                                 <div className='contact-header'>
-                                    <h2 className='contact-name'>{contact.contact_name}</h2>
+                                    <h2 className='contact-name'>
+                                        {contact.contact_name}
+                                        {contact.isFavorite && <span className='favorite-star'>❤️</span>}
+                                    </h2>
                                     <span className='contact-time'>
                                         {/* Assuming last_message_created_at is a Date object or string. 
                                             If it's a real Date object in the mock data, we must format it. 
@@ -74,10 +101,14 @@ export default function ContactList() {
                                 </div>
                                 <div className='contact-details'>
                                     <p className='contact-last-message'>
-                                        {/* Status Icon for Last Message */}
-                                        {contact.last_message_state === 'SEEN' && <span className='status-icon-list seen'>✓✓ </span>}
-                                        {contact.last_message_state === 'RECEIVED' && <span className='status-icon-list received'>✓✓ </span>}
-                                        {(contact.last_message_state === 'SENT' || !contact.last_message_state) && <span className='status-icon-list sent'>✓ </span>}
+                                        {/* Status Icon only for messages sent by me */}
+                                        {contact.last_message_author === 'YO' && (
+                                            <>
+                                                {contact.last_message_state === 'SEEN' && <span className='status-icon-list seen'>✓✓ </span>}
+                                                {contact.last_message_state === 'RECEIVED' && <span className='status-icon-list received'>✓✓ </span>}
+                                                {(contact.last_message_state === 'SENT' || !contact.last_message_state) && <span className='status-icon-list sent'>✓ </span>}
+                                            </>
+                                        )}
                                         
                                         {contact.last_message_content}
                                     </p>
@@ -110,11 +141,33 @@ export default function ContactList() {
                                         onClick={(e) => {
                                             e.preventDefault()
                                             e.stopPropagation()
+                                            togglePinChat(contact.contact_id)
+                                            setOpenMenuId(null)
+                                        }}
+                                    >
+                                        {contact.isPinned ? 'Desfijar chat' : 'Fijar chat'}
+                                    </div>
+                                    <div 
+                                        className='sidebar-menu-item'
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
                                             toggleBlockContact(contact.contact_id)
                                             setOpenMenuId(null)
                                         }}
                                     >
                                         {contact.isBlocked ? 'Desbloquear' : 'Bloquear'}
+                                    </div>
+                                    <div 
+                                        className='sidebar-menu-item'
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                            toggleFavorite(contact.contact_id)
+                                            setOpenMenuId(null)
+                                        }}
+                                    >
+                                        {contact.isFavorite ? '💔 Quitar de favoritos' : '❤️ Añadir a favoritos'}
                                     </div>
                                     <div 
                                         className='sidebar-menu-item'
@@ -135,5 +188,6 @@ export default function ContactList() {
             )
         }
     </div>
+    </>
   )
 }
