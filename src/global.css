@@ -57,9 +57,9 @@
     
     --shadow-box: rgba(0,0,0,.3);
 
-    /* Dark mode background: Use same image but inverted opacity or specific dark URL */
+    /* Dark mode background: Use same image*/
     --chat-bg-opacity: 0.06;
-    --chat-bg-filter: invert(1); /* Invert to make doodles light on dark bg */
+    --chat-bg-filter: invert(1); /* Invert to make doodles light on dark */
     --chat-bg-image: url('https://media.istockphoto.com/id/1201667381/es/vector/soporte-al-cliente-relacionado-patr%C3%B3n-sin-costuras-y-fondo-con-iconos-de-l%C3%ADnea.jpg?s=612x612&w=0&k=20&c=vlC_7TnvXF1ERqX1sJZJGu1K4-xdEBKr-1BW2VDwuGE=');
 }
 

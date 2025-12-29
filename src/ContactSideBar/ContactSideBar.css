@@ -17,10 +17,6 @@
         overflow-y: auto;
     }
 
-/*     .main-sidebar-title {
-        display: none !important; - Revertido según petición del usuario
-    }
- */
     /* Estilos fusionados del header móvil */
     .sidebar-header {
         display: flex;

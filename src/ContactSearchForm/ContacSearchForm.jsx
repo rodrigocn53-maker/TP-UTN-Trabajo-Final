@@ -28,7 +28,7 @@ export default function ContacSearchForm() {
 
     const handleChangePhone = (e) => {
         const value = e.target.value;
-        // Allow only numbers
+        // only numbers
         const regex = /^[0-9]*$/;
         if (regex.test(value)) {
             setNewContactPhone(value);
@@ -64,7 +64,9 @@ export default function ContacSearchForm() {
                     onClick={() => setShowAddMenu(!showAddMenu)} 
                     title="Opciones"
                 >
-                    +
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                    </svg>
                 </button>
                 {showAddMenu && (
                     <div className='add-menu-container'>
@@ -90,7 +92,7 @@ export default function ContacSearchForm() {
                 )}
             </div>
 
-            {/* Modal for adding contact */}
+            {/* adding contact */}
             {showModal && (
                 <div className='modal-overlay'>
                     <div className='modal-content'>

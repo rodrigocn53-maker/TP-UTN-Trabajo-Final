@@ -61,6 +61,14 @@ export function deleteMessageFromContact(contact_id, message_id) {
     }
 }
 
+export function emptyMessagesFromContact(contact_id) {
+    const contact = contact_data.find(c => Number(c.contact_id) === Number(contact_id));
+    if(contact) {
+        contact.messages = [];
+        contact.last_message_content = '';
+    }
+}
+
 export function editMessageInContact(contact_id, message_id, new_content) {
     const contact = contact_data.find(c => Number(c.contact_id) === Number(contact_id));
     if(contact) {

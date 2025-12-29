@@ -6,7 +6,7 @@ export default function GroupCreationModal({ isOpen, onClose }) {
     const { contactState, createGroup } = useContext(ContactListContext)
     const [selectedContactIds, setSelectedContactIds] = useState([])
     const [groupName, setGroupName] = useState('')
-    const [step, setStep] = useState(1) // 1: Select, 2: Name (Optional, doing single page for simplicity first)
+    const [step, setStep] = useState(1) // 1: Select, 2: Name (Optional)
 
     if (!isOpen) return null
 

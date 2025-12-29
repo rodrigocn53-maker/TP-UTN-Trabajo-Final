@@ -17,7 +17,7 @@
     left: 10px;
     z-index: 100;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px; /* Matching picker radius */
+    border-radius: 8px;
 }
 
 .active-emoji-btn {
@@ -37,7 +37,7 @@
     margin: 5px 0;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: var(--search-bg); /* Use search bar bg for input */
+    background-color: var(--search-bg);
     font-size: 15px;
     outline: none;
     min-height: 20px;
@@ -61,6 +61,5 @@
 }
 
 .send-btn {
-    /* Optional: make send button stand out or just be an icon */
     color: #54656f; 
 }

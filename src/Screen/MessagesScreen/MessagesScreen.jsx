@@ -10,16 +10,15 @@ import './MessagesScreen.css'
 
 export default function MessagesScreen() {
 
-    const { contactSelected, loadingContact } = useContext(ContactDetailContext)
+    const { contactSelected, loadingContact, clearChat } = useContext(ContactDetailContext)
     const { toggleBlockContact, deleteContact, contactState } = useContext(ContactListContext)
     const navigate = useNavigate()
-    // Removed resetUnseenMessages from here as it caused a loop and is already handled in ContactDetailContext
     const [showProfile, setShowProfile] = useState(false)
     const [startSearch, setStartSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
     const [showChatMenu, setShowChatMenu] = useState(false)
 
-    // Get live block status
+    // block status
     const currentContact = contactState.find(c => Number(c.contact_id) === Number(contactSelected?.contact_id))
     const isBlocked = currentContact?.isBlocked || false
 
@@ -101,7 +100,10 @@ export default function MessagesScreen() {
                                                 {isBlocked ? 'Desbloquear' : 'Bloquear'}
                                             </div>
                                             <div className='menu-item'>Reportar</div>
-                                            <div className='menu-item'>Vaciar chat</div>
+                                            <div className='menu-item' onClick={() => {
+                                                clearChat()
+                                                setShowChatMenu(false)
+                                            }}>Vaciar chat</div>
                                             <div className='menu-item' onClick={() => {
                                                 deleteContact(contactSelected.contact_id)
                                                 navigate('/')

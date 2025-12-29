@@ -46,6 +46,8 @@ const contact_data = [
     contact_id: 2,
     contact_name: 'Yoshi',
     contact_avatar: 'https://thumbs.dreamstime.com/b/dise%C3%B1o-de-arte-vectorial-yoshi-lindo-ilustraciones-del-yyoshi-282956880.jpg',
+    contact_bio: 'Héroe de Yoshi Island.',
+    contact_phone: '+1 123 456 7890',
     contact_unseen_messages: 1,
     last_message_content: 'smash time!',
     last_message_state: 'SEEN',
@@ -64,14 +66,16 @@ const contact_data = [
     contact_id: 3,
     contact_name: 'Mario',
     contact_avatar: 'https://i.pinimg.com/originals/96/f1/76/96f17624e3557c4848fa9ac94b34f245.jpg',
+    contact_bio: 'Héroe de Reino Champiñon.',
+    contact_phone: '+1 123 456 7890',
     contact_unseen_messages: 1,
-    last_message_content: 'Champineon',
+    last_message_content: 'Champiñon',
     last_message_state: 'SEEN',
     last_message_created_at: new Date(),
     messages:[
         {
         message_id: 1,
-        message_content: 'Champineon',
+        message_content: 'Champiñon',
         messages_state: 'RECEIVED',
         messages_create_at: new Date(), 
         send_by_me: false
@@ -82,6 +86,8 @@ const contact_data = [
     contact_id: 4,
     contact_name: 'Megaman',
     contact_avatar: 'https://images.wikidexcdn.net/mwuploads/esssbwiki/thumb/4/46/latest/20230328150646/Mega_Man_SSBU.png/1200px-Mega_Man_SSBU.png',
+    contact_bio: 'el "Bombardero Azul" que protege la paz en la Tierra',
+    contact_phone: '+1 123 456 7890',
     contact_unseen_messages: 1,
     last_message_content: 'Blaster',
     last_message_state: 'SEEN',
@@ -131,6 +137,46 @@ const contact_data = [
     last_message_state: 'SEEN',
     last_message_created_at: new Date(),
     messages: []
+    },
+    {
+    contact_id: 8,
+    contact_name: 'Dante',
+    contact_avatar: 'https://images.gamebanana.com/img/ss/mods/68ffeb191a3e0.jpg',
+    contact_bio: 'Cazando demonios',
+    contact_phone: '+54 9 11 8765 4321',
+    contact_unseen_messages: 1,
+    last_message_content: '"¡Vamos a rockear, nena!" (Let´s rock, baby!)',
+    last_message_state: 'SEEN',
+    last_message_created_at: new Date(),
+    messages:[
+        {
+        message_id: 1,
+        message_content: '"¡Vamos a rockear, nena!" (Let´s rock, baby!)',
+        messages_state: 'RECEIVED',
+        messages_create_at: new Date(), 
+        send_by_me: false
+        }
+    ]
+    },
+    {
+    contact_id: 9,
+    contact_name: 'Red',
+    contact_avatar: 'https://i.pinimg.com/originals/8e/7d/e1/8e7de100cee03e3f4023eac892a3dfc9.jpg',
+    contact_bio: 'Campeon de la Liga Pokemon',
+    contact_phone: '+54 9 11 8765 4321',
+    contact_unseen_messages: 1,
+    last_message_content: '.....!',
+    last_message_state: 'SEEN',
+    last_message_created_at: new Date(),
+    messages:[
+        {
+        message_id: 1,
+        message_content: '.....!',
+        messages_state: 'RECEIVED',
+        messages_create_at: new Date(), 
+        send_by_me: false
+        }
+    ]
     },
 ]
 

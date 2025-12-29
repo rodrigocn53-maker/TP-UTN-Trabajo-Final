@@ -3,7 +3,7 @@ import './CallsHistory.css'
 
 export default function CallsHistory() {
     
-    // Mock Data for Calls
+    // Data for Calls
     const calls = [
         { id: 1, name: 'Mamá', type: 'missed', date: 'Hoy, 10:30', avatar: 'https://ui-avatars.com/api/?name=Mama&background=random' },
         { id: 2, name: 'Jefe', type: 'incoming', date: 'Ayer, 18:45', avatar: 'https://ui-avatars.com/api/?name=Boss&background=random' },

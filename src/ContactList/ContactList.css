@@ -40,13 +40,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 0; /* Remove padding/border from here if moving to item */
-    border-bottom: none; /* Moved to container for full width logic or keep here if desired */
+    padding-bottom: 0;
+    border-bottom: none;
     padding-top: 0;
-    min-width: 0; /* needed for text-overflow to work in flex children */
+    min-width: 0; 
 }
 
-/* Remove border for the last item if desired, though WA keeps it usually except end of list */
 .contact-item:last-child {
     border-bottom: none;
 }
@@ -60,7 +59,7 @@
 
 .contact-name {
     font-size: 17px;
-    font-weight: 500; /* or normal/bold depending on font */
+    font-weight: 500;
     color: var(--text-primary);
     margin: 0;
     white-space: nowrap;
@@ -109,7 +108,7 @@
 }
 
 .contact-item:hover .contact-badge {
-    transform: translateX(-24px); /* Reduced shift slightly */
+    transform: translateX(-24px);
 }
 
 /* Sidebar Menu Trigger */

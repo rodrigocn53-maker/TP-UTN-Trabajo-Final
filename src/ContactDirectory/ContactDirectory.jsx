@@ -18,8 +18,7 @@ export default function ContactDirectory() {
         )
     }
 
-    // Group by first letter (Optional polish, but requested "A-Z list" usually implies structure)
-    // For now, flat sorted list is safer based on "lista de A-Z el orden".
+    // list is based on "A-Z el orden".
 
     return (
         <div className='contact-directory-container'>

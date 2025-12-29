@@ -4,11 +4,11 @@
     padding: 8px 16px;
     background-color: var(--bg-color-panel);
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
 }
 
 .filter-pills-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
 }
 
 .filter-pill {

@@ -4,7 +4,6 @@ import ContactSidebar from '../ContactSideBar/ContactSideBar'
 import UserProfileInfo from '../UserProfileInfo/UserProfileInfo'
 import ContactDirectory from '../ContactDirectory/ContactDirectory'
 import CallsHistory from '../CallsHistory/CallsHistory'
-/* import MobileHeader from '../Mobile/MobileHeader' - Eliminado ya que se integró en ContactSidebar */
 import MobileBottomNav from '../Mobile/MobileBottomNav'
 import './WhatsAppLayout.css'
 import { ThemeContext, ContactListContext } from '../Context/Contexts'
@@ -18,6 +17,9 @@ export default function WhatsAppLayout() {
   const [showMobileSettings, setShowMobileSettings] = useState(false)
   const location = useLocation()
   
+  // URL de la imagen de perfil del usuario
+  const PROFILE_IMAGE_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkdyavFYsxm4XSzR0CqzTFyaEJaOUAS6_LcA&s"
+  
   // Verificar si estamos en una ruta de chat para cambiar la vista móvil
   const isInChat = location.pathname.startsWith('/chat/')
   
@@ -28,7 +30,7 @@ export default function WhatsAppLayout() {
   }
 
   const renderSidebarContent = () => {
-      if (showUserProfile) return <UserProfileInfo onClose={() => setShowUserProfile(false)} />
+      if (showUserProfile) return <UserProfileInfo avatarUrl={PROFILE_IMAGE_URL} onClose={() => setShowUserProfile(false)} />
       
       switch (activeTab) {
           case 'contacts':
@@ -154,7 +156,7 @@ export default function WhatsAppLayout() {
                     title="Mi Perfil"
                 >
                     <img 
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkdyavFYsxm4XSzR0CqzTFyaEJaOUAS6_LcA&s" 
+                        src={PROFILE_IMAGE_URL} 
                         alt="Perfil" 
                         className="sidebar-avatar"
                     />

@@ -7,7 +7,7 @@ const MessagesList =({ messages }) => {
     const { contactSelected } = useContext(ContactDetailContext);
     const { contactState } = useContext(ContactListContext);
     
-    // If messages prop is passed (e.g. filtered), use it. Otherwise use all messages.
+    // If messages prop is passed (e.g. filtered)
     const displayMessages = messages || contactSelected.messages
 
     const bottomRef = useRef(null)
@@ -18,7 +18,7 @@ const MessagesList =({ messages }) => {
         const currentLength = displayMessages.length
         const currentContactId = contactSelected?.contact_id
         
-        // Scroll if chat changed OR if new message added
+        // Scroll if chat
         if (currentContactId !== prevContactId.current || currentLength > prevLength.current) {
             bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
         }

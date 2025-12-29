@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useContext } from "react";
 import { Outlet, useParams } from "react-router";
-import { getContactById, saveMessageToContact, deleteMessageFromContact, editMessageInContact } from "../services/contactService";
+import { getContactById, saveMessageToContact, deleteMessageFromContact, editMessageInContact, emptyMessagesFromContact } from "../services/contactService";
 import { ContactDetailContext, ContactListContext } from "./Contexts";
 
 const ContactDetailContextProvider = ({ children }) => {
@@ -9,8 +9,7 @@ const ContactDetailContextProvider = ({ children }) => {
     const [contactSelected, setContactSelected] = useState(null)
     const [loadingContact, setLoadingContact] = useState(true)
     
-    // Consume ContactListContext to update the list when a message is sent
-    const { updateLastMessage, addMessage, resetUnseenMessages, contactState, updateMessageStatus } = useContext(ContactListContext);
+    const { updateLastMessage, addMessage, resetUnseenMessages, contactState, updateMessageStatus, clearMessages } = useContext(ContactListContext);
 
     // Effect 1: Handle Chat Entry (Loading + Reset Unseen)
     useEffect(() => {
@@ -116,13 +115,25 @@ const ContactDetailContextProvider = ({ children }) => {
 
 
 
+
+    function clearChat() {
+        emptyMessagesFromContact(contact_id);
+        clearMessages(contact_id); // Update global state
+        
+        setContactSelected({
+            ...contactSelected,
+            messages: []
+        });
+    }
+
     const providerValues = {
         contactSelected,
         loadingContact,
         AddNewMenssage,
         deleteMessage,
         editMessage,
-        addReaction
+        addReaction,
+        clearChat
     }
 
     

@@ -195,6 +195,19 @@ const ContactListContextProvider = () => {
         }));
     }, []);
 
+    const clearMessages = useCallback((contactId) => {
+        setContactState(prevContacts => prevContacts.map(contact => {
+            if (Number(contact.contact_id) === Number(contactId)) {
+                return {
+                    ...contact,
+                    messages: [],
+                    last_message_content: ''
+                };
+            }
+            return contact;
+        }));
+    }, []);
+
     const providerValues = {
         contactState: typeFilteredContacts, // Use filtered list
         loadingContactsState,
@@ -213,7 +226,8 @@ const ContactListContextProvider = () => {
         setFilterType,
         searchString, 
         setSearchString,
-        totalUnread
+        totalUnread,
+        clearMessages
     }
 
     return (

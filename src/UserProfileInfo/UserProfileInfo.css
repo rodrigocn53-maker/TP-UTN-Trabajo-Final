@@ -24,8 +24,8 @@
 .dark-theme .user-profile-header {
     background-color: var(--bg-color-header);
     color: var(--text-primary);
-    align-items: center; /* Adjust height/align for dark mode style if needed */
-    height: 60px; /* WA Dark mode header is usually shorter or same */
+    align-items: center; 
+    height: 60px;
 }
 
 /* WhatsApp Web Header Height Adjustment */
@@ -38,7 +38,7 @@
 .back-btn {
     background: none;
     border: none;
-    color: white; /* Or var(--text-primary) in dark */
+    color: white;
     font-size: 24px;
     cursor: pointer;
     font-weight: bold;

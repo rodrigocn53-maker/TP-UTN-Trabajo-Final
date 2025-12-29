@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './UserProfileInfo.css'
 
-export default function UserProfileInfo({ onClose }) {
+export default function UserProfileInfo({ onClose, avatarUrl: initialAvatarUrl }) {
     const [userName, setUserName] = useState('Tu Nombre')
     const [isEditingName, setIsEditingName] = useState(false)
     const [tempName, setTempName] = useState('Tu Nombre')
-    const [avatarUrl, setAvatarUrl] = useState('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png')
+    // Usar la URL pasada como prop, o un fallback si no existe--imagen de sin foto de perfil
+    const [avatarUrl, setAvatarUrl] = useState(initialAvatarUrl || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png')
 
     const handleSaveName = () => {
         setUserName(tempName)

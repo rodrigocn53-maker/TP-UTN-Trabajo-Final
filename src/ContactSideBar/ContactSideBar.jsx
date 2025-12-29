@@ -43,11 +43,3 @@ export default function ContactSidebar({ onSettingsClick }) {
         </aside>
     )
 }
-
-/* const [nombre, edad] = [ 'pepe', 32 ] */
-/* 
-const persona_nombre = persona[0]
-const persona_edad = persona[1] 
-*/
-
-/* const [nombre, edad] = persona */

@@ -16,19 +16,19 @@ export default function MessageItem({ message, avatar }) {
     const triggerRef = useRef(null)
     const [openUp, setOpenUp] = useState(false)
 
-    // Check position when opening
+    // Check position opening
     const handleToggleMenu = () => {
         if (!showMenu && triggerRef.current) {
             const rect = triggerRef.current.getBoundingClientRect();
             const spaceBelow = window.innerHeight - rect.bottom;
-            setOpenUp(spaceBelow < 220); // 220px threshold
+            setOpenUp(spaceBelow < 220);
         }
         setShowMenu(!showMenu)
     }
 
     const commonReactions = ['👍', '❤️', '😂', '😮', '😢', '🙏']
 
-    // Close menu when clicking outside
+    // Close menu clicking
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -64,7 +64,6 @@ export default function MessageItem({ message, avatar }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => {
                 setIsHovered(false)
-                // Optional: close picker on leave? Better to keep it open if interaction intent
             }}
         >
             {avatar && !isSentByMe && (
@@ -135,7 +134,7 @@ export default function MessageItem({ message, avatar }) {
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg>
                     </button>
 
-                    {/* Reaction Picker Popover */}
+                    {/* Reaction Picker */}
                     {showReactionPicker && (
                         <div className='reaction-picker-popover' ref={reactionRef}>
                             {commonReactions.map(emoji => (

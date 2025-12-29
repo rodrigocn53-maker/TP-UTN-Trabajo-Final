@@ -92,10 +92,6 @@ export default function ContactList() {
                                         {contact.isFavorite && <span className='favorite-star'>❤️</span>}
                                     </h2>
                                     <span className='contact-time'>
-                                        {/* Assuming last_message_created_at is a Date object or string. 
-                                            If it's a real Date object in the mock data, we must format it. 
-                                            In a real app, this might come as ISO string. 
-                                            Safe check for .toLocaleTimeString if it's a date. */}
                                         { new Date(contact.last_message_created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }
                                     </span>
                                 </div>
